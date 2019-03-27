@@ -20,8 +20,8 @@
                     <a href="{{ path('bill-pdf', { id:bill.id }) }}"><i class="fas fa-file-pdf fa-2x"></i></a>
                 </td>
                 <td class="text-center">{{ bill.name }}</td>
-                <td class="text-center">{{ bill.date|date("d/m/Y") }}</td>
-                <td class="text-center">{{ bill.modificationDate|date("d/m/Y") }}</td>
+                <td class="text-center" data-sort="{{ bill.date|date("Ymd") }}">{{ bill.date|date("d/m/Y") }}</td>
+                <td class="text-center" data-sort="{{ bill.date|date("Ymd") }}">{{ bill.modificationDate|date("d/m/Y") }}</td>
                 <td class="text-center">{{ bill.user.email ?? 'owner' }}</td>
                 <td class="text-center">{{ bill.price }} €</td>
                 <td class="text-center">
