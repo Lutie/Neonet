@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h1> Liste des services </h1>
+
+<legend class="mb-4"></legend>
+
+    <div class="table-responsive table-hover">
+        <table id="service-list" class="table table-bordered table-striped">
+
+            <thead>
+                <td class="col-xs-1 text-center">Identifiant</td>
+                <td class="col-xs-1 text-center">Titre</td>
+                <td class="col-xs-1 text-center">Description</td>
+                <td class="col-xs-1 text-center">Prix</td>
+                <td class="col-xs-1 text-center">Service parent</td>
+                <td class="col-xs-1 text-center">Option(s)</td>
+                <td class="col-xs-1 text-center sorter-false filter-false"></td>
+                <td class="col-xs-1 text-center sorter-false filter-false">
+                    <a href="{{ path('service-add') }}"
+                       class="btn btn-success btn-block">Ajouter un service</a>
+                </td>
+            </thead>
+
+            <tbody>
+            {% set mon_token = csrf_token('NNC_SERVICE_SECURITY_TOKEN') %}
+            {% for service in services %}
+                <tr>
+                    <td class="text-center">{{ service.id }}</td>
+                    <td class="text-center">{{ service.name }}</td>
+                    <td class="text-center">{{ service.description }}</td>
+                    <td class="text-center">{{ service.price }}</td>
+                    <td class="text-center">{{ service.service }}</td>
+                    <td class="text-center">{{ service.items|length }}</td>
+                    <td>
+                        <a href="{{ path('service-update', { id:service.id, token:mon_token }) }}"
+                           class="btn btn-warning btn-block">Configurer</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('service-delete', { id:service.id, token:mon_token }) }}"
+                           class="btn btn-danger btn-block confirmation-required">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

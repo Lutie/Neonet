@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h1> Liste des options de service </h1>
+
+<legend class="mb-4"></legend>
+
+    <div class="table-responsive table-hover">
+        <table id="item-list" class="table table-bordered table-striped">
+
+            <thead>
+                <td class="col-xs-1 text-center">Titre</td>
+                <td class="col-xs-1 text-center">Description</td>
+                <td class="col-xs-1 text-center">Prix</td>
+                <td class="col-xs-1 text-center">Service associé</td>
+                <td class="col-xs-1 text-center sorter-false filter-false"></td>
+                <td class="col-xs-1 text-center sorter-false filter-false">
+                    <a href="{{ path('item-add') }}"
+                       class="btn btn-success btn-block">Ajouter une option</a>
+                </td>
+            </thead>
+
+            <tbody>
+                {% set mon_token = csrf_token('NNC_ITEM_SECURITY_TOKEN') %}
+                {% for item in items %}
+                    <tr>
+                        <td class="text-center">{{ item.name }}</td>
+                        <td class="text-center">{{ item.description }}</td>
+                        <td class="text-center">{{ item.price }}</td>
+                        <td class="text-center">{{ item.service }}</td>
+                        <td>
+                            <a href="{{ path('item-update', { id:item.id, token:mon_token }) }}"
+                               class="btn btn-warning btn-block">Configurer</a>
+                        </td>
+                        <td>
+                            <a href="{{ path('item-delete', { id:item.id, token:mon_token }) }}"
+                               class="btn btn-danger btn-block confirmation-required">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

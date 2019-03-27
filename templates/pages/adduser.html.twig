@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1> Ajouter un utilisateur </h1>
+
+    <legend class="mb-4"></legend>
+
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="offset-3 col-6"> {{ form_row(form.email) }} </div>
+    </div>
+    <button type="submit" class="btn btn-primary offset-5 col-2">Créer les accés</button>
+    {{ form_end(form) }}
+
+{% endblock %}

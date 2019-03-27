@@ -1,0 +1,39 @@
+<div class="table-responsive table-hover">
+    <table id="bill-list" class="table table-bordered table-striped">
+
+        <thead>
+            <td class="col-xs-1 text-center sorter-false filter-false">Générer PDF</td>
+            <td class="col-xs-1 text-center">Titre</td>
+            <td class="col-xs-1 text-center">Création</td>
+            <td class="col-xs-1 text-center">Dernière modification</td>
+            <td class="col-xs-1 text-center">Auteur</td>
+            <td class="col-xs-1 text-center">Montant</td>
+            <td class="col-xs-1 text-center sorter-false filter-false">Modifier</td>
+            <td class="col-xs-1 text-center sorter-false filter-false">Supprimer</td>
+        </thead>
+
+        <tbody>
+        {% set mon_token = csrf_token('NNC_BILL_SECURITY_TOKEN') %}
+        {% for bill in bills %}
+            <tr>
+                <td class="text-center">
+                    <a href="{{ path('bill-pdf', { id:bill.id }) }}"><i class="fas fa-file-pdf fa-2x"></i></a>
+                </td>
+                <td class="text-center">{{ bill.name }}</td>
+                <td class="text-center">{{ bill.date|date("d/m/Y") }}</td>
+                <td class="text-center">{{ bill.modificationDate|date("d/m/Y") }}</td>
+                <td class="text-center">{{ bill.user.email ?? 'owner' }}</td>
+                <td class="text-center">{{ bill.price }} €</td>
+                <td class="text-center">
+                    <a href="{{ path('bill-modify', { id:bill.id, token:mon_token }) }}"
+                       class="btn btn-warning btn-block">Modifier</a>
+                </td>
+                <td class="text-center">
+                    <a href="{{ path('bill-delete', { id:bill.id, token:mon_token }) }}"
+                       class="btn btn-danger btn-block confirmation-required">Supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

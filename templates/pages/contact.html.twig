@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1> Contact </h1>
+
+    <legend class="mb-4"></legend>
+
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-4 offset-4"> {{ form_row(form.email) }} </div>
+    </div>
+
+    <div class="row">
+        <div class="col-8 offset-2">{{ form_row(form.message, { 'attr': {'rows': '4'} }) }}</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary offset-4 col-4">Envoyer</button>
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endblock %}

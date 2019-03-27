@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% set route = app.request.attributes.get('_route') %}
+
+    <h1> Créer un devis </h1>
+
+    <legend class="mb-4"></legend>
+
+    {% set mon_token = csrf_token('NNC_BILL_SECURITY_TOKEN') %}
+    {% if route == 'bill-create' %}
+        <form method="post" action="{{ path('bill-add') }}">
+    {% else %}
+        <form method="post" action="{{ path('bill-update', {id:bill_id, token:mon_token}) }}">
+    {% endif %}
+        <div class="form-group">
+            <label for="title" class="required">Titre du devis <span id="title-hint" class="small">(4 caractères minimum)</span></label>
+            <input type="text" name="title" id="title" value="{{ bill_title }}" class="form-control"/>
+        </div>
+
+        {% for service in services %}
+            {% set id_service = 'service_' ~ service.id %}
+            {% set label_service = 'label' ~ service.id %}
+            {% set from_service = service.service.id ?? null %}
+            <table  class="table table-bordered table-striped {{ from_service != null ? 'replace-me hidden' : label_service }}"
+                    data-replace="{{ from_service ?? null }}">
+                <tr>
+                    <th colspan="4">
+                        {% if service.id in previous_services %}
+                            {% set status = 'checked' %}
+                        {% else %}
+                            {% set status = '' %}
+                        {% endif %}
+                        <input class="service-checkbox" type="checkbox" {{ status }} name="{{ id_service }}" id="{{ id_service }}"/>
+                        <label for="{{ id_service }}">{{ service.name }}
+                            {% if service.description != '' %}
+                                <i class="fas fa-info-circle fa-sm"
+                                   title="{{ service.description }}" data-toggle="tooltip"></i>
+                            {% endif %}
+                        </label>
+                    </th>
+                </tr>
+                {% for item in items %}
+                    {% if item.service.id == service.id %}
+                        <tr class="{{ id_service }} hidden">
+                            {% set id_item = 'item_' ~ item.id %}
+                            <th class="w-50">
+                                <label for="{{ id_item ~ '_quantity' }}">{{ item.name }}
+                                    {% if item.description != '' %}
+                                        <i class="fas fa-info-circle fa-sm" title="{{ item.description }}" data-toggle="tooltip"></i>
+                                    {% endif %}
+                                </label>
+                            </th>
+                            <th class="text-center">
+                                {% set value = 0 %}
+                                {% for previous_item in previous_items if previous_item[item.id] is defined %}
+                                    {% set value = previous_item[item.id] %}
+                                {% endfor %}
+                                <input type="number" value="{{ value }}" min="0" class="text-center items"
+                                       name="{{ id_item }}" data-service="{{ item.service.id }}"/>
+                            </th>
+                            <th class="text-center">x <span id="{{ id_item ~ '_price' }}">{{ item.price }}</span> €</th>
+                            <th class="text-center">= <span id="{{ id_item ~ '_total' }}">0</span> €</th>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        {% endfor %}
+
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th class="text-center">
+                    <label for="bill_total">Total</label>
+                </th>
+                <th class="text-center">
+                    <input type="text" name="total" id="bill_total" value="0" class="text-center" readonly/> €
+                </th>
+            </tr>
+        </table>
+        <div class="form-group">
+            <label class="btn btn-warning offset-5 col-2" for="withPdf" id="pdfLabel">Générer un PDF</label>
+            <input type="text" id="withPdf" name="withPdf" value="noPdf" hidden>
+        </div>
+        <div class="form-group">
+            <button id="bill-submit" type="submit" class="btn btn-primary offset-5 col-2" disabled="disabled">Enregistrer</button>
+        </div>
+    </form>
+
+{% endblock %}

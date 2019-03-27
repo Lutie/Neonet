@@ -1,0 +1,33 @@
+{% set route = app.request.attributes.get('_route') %}
+
+<a class="pt-2 pb-2 d-md-none btn-dark btn-block text-center" data-toggle="collapse" href="#navbar" role="button"
+   aria-expanded="true" aria-controls="navbar" aria-label="Toggle navigation">
+    <i class="fas fa-bars fa-2x"></i>
+</a>
+
+<nav id="navbar" class="collapse show">
+    <ul class="nav nav-tabs nav-fill navbar-grey bg-grey-g d-flex flex-column flex-md-row">
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <li class="nav-item {{ route starts with 'users' ? 'active' }}">
+            <a href="{{ path('users') }}" class="nav-link">
+                <i class="fas fa-users fa-2x"></i> / Liste des utilisateurs</a>
+        </li>
+        <li class="nav-item {{ route starts with 'services' ? 'active' }}">
+            <a href="{{ path('services') }}" class="nav-link">
+                <i class="fas fa-handshake fa-2x"></i> / Liste des services</a>
+        </li>
+        <li class="nav-item {{ route starts with 'items' ? 'active' }}">
+            <a href="{{ path('items') }}" class="nav-link">
+                <i class="fas fa-sitemap fa-2x"></i> / Liste des options</a>
+        </li>
+        {% endif %}
+        <li class="nav-item {{ route starts with 'bills' ? 'active' }}">
+            <a href="{{ path('bills') }}" class="nav-link">
+                <i class="fas fa-copy fa-2x"></i> / Liste des devis</a>
+        </li>
+        <li class="nav-item {{ route starts with 'bills' ? 'active' }}">
+            <a href="{{ path('bill-create') }}" class="nav-link">
+                <i class="fas fa-copy fa-2x"></i> / Créer un devis</a>
+        </li>
+    </ul>
+</nav>

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h1> Liste des utilisateurs </h1>
+
+<legend class="mb-4"></legend>
+
+    <div class="table-responsive table-hover">
+        <table id="user-list" class="table table-bordered table-striped">
+
+            <thead>
+                <td class="col-xs-1 text-center sorter-false filter-false">Voir les devis</td>
+                <td class="col-xs-1 text-center">Email de l'utilisateur</td>
+                <td class="col-xs-1 text-center">Date de création des accés</td>
+                <td class="col-xs-1 text-center sorter-false filter-false">
+                    <a href="{{ path('user-add') }}"
+                       class="btn btn-success btn-block">Ajouter utilisateur</a>
+                </td>
+            </thead>
+
+            <tbody>
+            {% set mon_token = csrf_token('NNC_USER_SECURITY_TOKEN') %}
+            {% for user in users %}
+                <tr>
+                    <td class="text-center">
+                        <a href="{{ path('bills-user', { id:user.id }) }}">
+                            <i class="fas fa-copy fa-2x"></i>
+                        </a>
+                    </td>
+                    <td class="text-center">{{ user.email }}</td>
+                    <td class="text-center">{{ user.date|date("d/m/Y") }}</td>
+                    <td>
+                        <a href="{{ path('user-delete', { id:user.id, token:mon_token }) }}"
+                           class="btn btn-danger btn-block confirmation-required">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

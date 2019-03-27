@@ -1,0 +1,33 @@
+{% set route = app.request.attributes.get('_route') %}
+
+<a class="pt-2 pb-2 d-md-none btn-dark btn-block text-center" data-toggle="collapse" href="#menubar" role="button"
+   aria-expanded="true" aria-controls="menubar" aria-label="Toggle navigation">
+    <i class="fas fa-bars fa-2x"></i>
+</a>
+
+<nav id="menubar" class="collapse show">
+    <ul class="nav nav-tabs nav-fill navbar-dark bg-dark-g d-flex flex-column flex-md-row">
+        <li class="nav-item {{ route starts with 'index' ? 'active' }}">
+            <a href="{{ path('index') }}" class="nav-brand">
+                <img alt="logo" src="{{ asset('img/nnc.png') }}" width="20%">
+            </a>
+        </li>
+        <li class="nav-item {{ route ends with 'about' ? 'active' }}">
+            <a href="{{ path('about') }}" class="nav-link">
+                <i class="fas fa-building fa-2x"></i> / Notre Entreprise</a>
+        </li>
+        <li class="nav-item {{ route ends with 'contact' ? 'active' }}">
+            <a href="{{ path('contact') }}" class="nav-link">
+                <i class="fas fa-clipboard fa-2x"></i> / Nous Contacter</a>
+        </li>
+        <li class="nav-item {{ route == 'login' ? 'active' }}">
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a href="{{ path('logout') }}" class="nav-link">
+                    <i class="fas fa-door-closed fa-2x"></i> / Déconnexion</a>
+            {% else %}
+                <a href="{{ path('login') }}" class="nav-link">
+                    <i class="fas fa-door-open fa-2x"></i> / Connexion</a>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
