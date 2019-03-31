@@ -357,6 +357,7 @@ class BillsController extends AbstractController
 
     function fetchBillDatas(Bill $bill) {
         $datas = [
+            'description' => $bill->getDescription(),
             'title' => $bill->getName(),
             'price' => 0,
             'date' => new \DateTime(),
