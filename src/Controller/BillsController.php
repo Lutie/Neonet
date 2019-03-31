@@ -84,6 +84,7 @@ class BillsController extends AbstractController
             'previous_services' => [],
             'previous_items' => [],
             'bill_title' => '',
+            'bill_description' => '',
         ]);
     }
 
@@ -107,6 +108,7 @@ class BillsController extends AbstractController
             'previous_items' => $bill->getItems(),
             'bill_id' => $bill->getId(),
             'bill_title' => $bill->getName(),
+            'bill_description' => $bill->getDescription(),
         ]);
     }
 
@@ -142,6 +144,10 @@ class BillsController extends AbstractController
         $title = $request->request->get('title');
         $title = $this->check($title, 'title');
         $bill->setName($title);
+
+        $description = $request->request->get('description');
+        $description = $this->check($description, 'description');
+        $bill->setDescription($description);
 
         $total = $request->request->get('total');
         $total = $this->check($total, 'total');
@@ -195,6 +201,10 @@ class BillsController extends AbstractController
         $title = $request->request->get('title');
         $title = $this->check($title, 'title');
         $bill->setName($title);
+
+        $description = $request->request->get('description');
+        $description = $this->check($description, 'description');
+        $bill->setDescription($description);
 
         $total = $request->request->get('total');
         $total = $this->check($total, 'total');

@@ -46,6 +46,13 @@ class Bill
      */
     private $items = [];
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255)
+     */
+    private $description;
+
     public function __construct()
     {
         $this->date = new \DateTime();
@@ -157,6 +164,22 @@ class Bill
     {
         $this->services = [];
         $this->items = [];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description): void
+    {
+        $this->description = $description;
     }
 
 }
