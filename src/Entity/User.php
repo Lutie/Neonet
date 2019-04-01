@@ -45,6 +45,8 @@ class User implements UserInterface
      */
     private $roles = [];
 
+    private $isAdmin = 0;
+
     public function __construct()
     {
         $this->date = new \DateTime();
@@ -113,7 +115,7 @@ class User implements UserInterface
      */
     public function setRoles($roles): void
     {
-        $this->roles = $roles;
+        $this->roles = [$roles];
     }
 
     public function getUsername()
@@ -129,6 +131,22 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         $this->rawPassword = null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->isAdmin;
+    }
+
+    /**
+     * @param bool $isAdmin
+     */
+    public function setIsAdmin(bool $isAdmin): void
+    {
+        $this->isAdmin = $isAdmin;
     }
 
 }
