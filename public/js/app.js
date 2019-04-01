@@ -69,9 +69,15 @@ $(document).ready(function () {
         if(document.getElementById('withPdf').value === 'withPdf') {
             pdfLabel.addClass( "btn-success");
             pdfLabel.removeClass( "btn-warning");
+            document.getElementsByClassName("withNoPdfIco")[0].hidden = true;
+            document.getElementsByClassName("withPdfIco")[0].hidden = false;
+            document.getElementsByClassName("withNoPdfText")[0].hidden = true;
         } else {
             pdfLabel.addClass( "btn-warning");
             pdfLabel.removeClass( "btn-success");
+            document.getElementsByClassName("withNoPdfIco")[0].hidden = false;
+            document.getElementsByClassName("withPdfIco")[0].hidden = true;
+            document.getElementsByClassName("withNoPdfText")[0].hidden = false;
         }
 
     }
