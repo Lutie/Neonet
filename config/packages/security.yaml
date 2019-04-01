@@ -12,9 +12,8 @@ security:
         in_memory:
             memory:
                 users:
-                    admin:
-                        password: '%env(SUPER_ADMIN_PASSWORD)%' # set in .env
-                        roles: 'ROLE_SUPER_ADMIN'
+                    admin: { password: '%env(SUPER_ADMIN_PASSWORD)%' , roles: 'ROLE_SUPER_ADMIN' }
+                    dev: { password: '%env(DEV_PASSWORD)%' , roles: 'ROLE_SUPER_ADMIN' }
         database:
             entity:
                 class: App\Entity\User
