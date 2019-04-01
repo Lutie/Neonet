@@ -32,7 +32,7 @@ security:
             provider: chain_provider
             anonymous: true
             form_login:
-                login_path: index
+                login_path: login
                 check_path: login
             logout:
                 path: logout
