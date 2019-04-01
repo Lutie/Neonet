@@ -6,6 +6,10 @@
 
     <legend></legend>
     </br>
-    <p>Veuillez vous connecter afin de pouvoir profiter des fonctionnalités du site.</p>
+    {% if is_granted('ROLE_USER') %}
+        <p>Bienvenu sur notre plateforme de devis.</p>
+    {% else %}
+        <p>Veuillez vous connecter afin de pouvoir profiter des fonctionnalités du site.</p>
+    {% endif %}
 
 {% endblock %}
