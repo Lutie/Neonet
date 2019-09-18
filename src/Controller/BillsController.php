@@ -322,7 +322,7 @@ class BillsController extends AbstractController
         $html = $this->renderView('pdf/template.html.twig', [
             'datas' => $datas,
             'nncLogoUrl' => getenv('NNC_LOGO_URL'),
-            'comLogoUrl' => getenv('COM_LOGO_URL'),
+            'partnerLogoUrl' => getenv('PARTNER_LOGO_URL'),
         ]);
 
         // Load HTML to Dompdf
@@ -335,7 +335,7 @@ class BillsController extends AbstractController
         $dompdf->render();
 
         // Output the generated PDF to Browser (inline view)
-        $dompdf->stream($this->randomTitle(10) . ".pdf", [
+        $dompdf->stream($bill->getName() . ".pdf", [
             "Attachment" => false
         ]);
     }

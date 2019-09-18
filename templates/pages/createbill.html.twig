@@ -9,9 +9,9 @@
 
     {% set mon_token = csrf_token('NNC_BILL_SECURITY_TOKEN') %}
     {% if route == 'bill-create' %}
-        <form method="post" action="{{ path('bill-add') }}">
+        <form id="billForm" method="post" action="{{ path('bill-add') }}" target="_self">
     {% else %}
-        <form method="post" action="{{ path('bill-update', {id:bill_id, token:mon_token}) }}">
+        <form id="billForm" method="post" action="{{ path('bill-update', {id:bill_id, token:mon_token}) }}" target="_self">
     {% endif %}
         <div class="form-group">
             <label for="title" class="required">Titre du devis <span id="title-hint" class="small">(4 caractères minimum)</span></label>

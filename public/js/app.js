@@ -79,7 +79,6 @@ $(document).ready(function () {
             document.getElementsByClassName("withPdfIco")[0].hidden = true;
             document.getElementsByClassName("withNoPdfText")[0].hidden = false;
         }
-
     }
 
 

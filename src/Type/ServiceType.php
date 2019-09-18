@@ -21,9 +21,6 @@ class ServiceType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
             ])
-            ->add('price', IntegerType::class, [
-                'label' => 'Prix (en €)',
-            ])
             ->add('service', EntityType::class, [
                 'label' => 'Service parent',
                 'class' => Service::class,

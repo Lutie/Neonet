@@ -21,7 +21,7 @@
                 </td>
                 <td class="text-center">{{ bill.name }}</td>
                 <td class="text-center" data-sort="{{ bill.date|date("Ymd") }}">{{ bill.date|date("d/m/Y") }}</td>
-                <td class="text-center" data-sort="{{ bill.date|date("Ymd") }}">{{ bill.modificationDate|date("d/m/Y") }}</td>
+                <td class="text-center" data-sort="{{ bill.modificationDate|date("Ymd") }}">{{ bill.modificationDate|date("d/m/Y") }}</td>
                 <td class="text-center">{{ bill.user.email ?? 'owner' }}</td>
                 <td class="text-center">{{ bill.price }} €</td>
                 <td class="text-center">
