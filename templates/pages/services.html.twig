@@ -13,7 +13,7 @@
                 <td class="col-xs-1 text-center">Identifiant</td>
                 <td class="col-xs-1 text-center">Titre</td>
                 <td class="col-xs-1 text-center">Description</td>
-                <td class="col-xs-1 text-center">Prix</td>
+                {#<td class="col-xs-1 text-center">Prix</td>#}
                 <td class="col-xs-1 text-center">Service parent</td>
                 <td class="col-xs-1 text-center">Option(s)</td>
                 <td class="col-xs-1 text-center sorter-false filter-false"></td>
@@ -30,7 +30,7 @@
                     <td class="text-center">{{ service.id }}</td>
                     <td class="text-center">{{ service.name }}</td>
                     <td class="text-center">{{ service.description }}</td>
-                    <td class="text-center">{{ service.price }}</td>
+                    {#<td class="text-center">{{ service.price }}</td>#}
                     <td class="text-center">{{ service.service }}</td>
                     <td class="text-center">{{ service.items|length }}</td>
                     <td>

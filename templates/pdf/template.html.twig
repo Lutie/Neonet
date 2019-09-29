@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8"/>
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {#<meta http-equiv="X-UA-Compatible" content="IE=edge">#}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        {# Bootstrap v4.0.0 #}
-        <link rel="stylesheet"
-              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    {# Bootstrap v4.0.0 #}
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
-        {# Pdf Style #}
-        <link rel="stylesheet" type="text/css"
-              href="{{ asset('css/pdf-style.css') }}">
+    {# Pdf Style #}
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('css/pdf-style.css') }}">
 
     <title>Devis</title>
 
@@ -60,7 +61,7 @@
     {% endfor %}
 
     {% if datas.description != '' %}
-        <h3>Commentaire(s)</h3>
+        <p><strong>Commentaire(s)</strong></p>
         <p>{{ datas.description }}</p>
     {% endif %}
 
