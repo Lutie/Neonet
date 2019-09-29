@@ -271,8 +271,8 @@ class BillsController extends AbstractController
 
     function clean($dirty_string)
     {
-        $strip_string = strip_tags($dirty_string);
-        $clean_string = htmlspecialchars($strip_string, ENT_QUOTES);
+        $clean_string = strip_tags($dirty_string);
+        //$clean_string = htmlspecialchars($clean_string, ENT_QUOTES);
 
         return $clean_string;
     }
@@ -342,6 +342,7 @@ class BillsController extends AbstractController
 
     function fakeBill() {
         $bill = new Bill();
+        $bill->setId(0);
         $bill->setName("Devis de test");
         $bill->setUser(null);
         $bill->setServices([1, 2, 4]);
@@ -362,6 +363,7 @@ class BillsController extends AbstractController
             'price' => 0,
             'date' => new \DateTime(),
             'services' => [],
+            'number' => sprintf("%'.06d\n", $bill->getId()),
         ];
 
         $em = $this->getDoctrine()->getManager();

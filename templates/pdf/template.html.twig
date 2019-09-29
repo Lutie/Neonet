@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html xml:lang="fr" lang="fr">
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="utf8mb4"/>
 
     {#<meta http-equiv="X-UA-Compatible" content="IE=edge">#}
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -33,7 +33,7 @@
             </div>
         </div>
         <div>
-            <p><strong>{{ datas.title }}</strong></p>
+            <p>Devis n° {{ datas.number }} - <strong>{{ datas.title }}</strong></p>
             <p>(Ce document est édité à titre provisoire)</p>
         </div>
     </div>
@@ -62,7 +62,7 @@
 
     {% if datas.description != '' %}
         <p><strong>Commentaire(s)</strong></p>
-        <p>{{ datas.description }}</p>
+        <p style="white-space: pre-line">{{ datas.description }}</p>
     {% endif %}
 
     <table class="table table-bordered table-striped">
