@@ -39,7 +39,7 @@
                     </td>
                     <td>
                         <a href="{{ path('service-delete', { id:service.id, token:mon_token }) }}"
-                           class="btn btn-danger btn-block confirmation-required">Supprimer</a>
+                           class="btn btn-danger btn-block confirmation-required" data-text="Le service sera définitivement supprimé.">Supprimer</a>
                     </td>
                 </tr>
             {% endfor %}

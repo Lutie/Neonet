@@ -39,7 +39,7 @@
                     </td>
                     <td>
                         <a href="{{ path('user-delete', { id:user.id, token:mon_token }) }}"
-                           class="btn btn-danger btn-block confirmation-required">Supprimer</a>
+                           class="btn btn-danger btn-block confirmation-required" data-text="L'utilisateur sera définitivement supprimé.">Supprimer</a>
                     </td>
                 </tr>
             {% endfor %}

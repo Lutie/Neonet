@@ -2,7 +2,8 @@ $(document).ready(function () {
 
     // Permet d'inclure une pop up de validation dans certains liens (comme ceux de suppression par exemple)
     $('.confirmation-required').click(function () {
-        return window.confirm("Êtes vous certain de vouloir procéder à cette action ? \n Les conséquences seront irreversibles...");
+        var text = $(this).data('text');
+        return window.confirm("Êtes vous certain de vouloir procéder à cette action ? \n" + text);
     });
 
     // Permet d'activer DataTable pour les tables séléctionnées
@@ -86,7 +87,6 @@ $(document).ready(function () {
     var assertForm = function(){
         // title must have 4 or more characters
         var txt = $('#title').val().length;
-        console.log(txt);
         if(txt >= 4) {
             $('#bill-submit').prop('disabled', false);
             $('#title-hint').hide();
@@ -157,4 +157,3 @@ $(document).ready(function () {
     assertForm();
 
 });
-

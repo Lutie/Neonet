@@ -159,11 +159,11 @@ class BillsController extends AbstractController
         $em->persist($bill);
         $em->flush();
 
+        $this->addFlash('success', 'Le devis a été créé.');
+
         if($request->request->get('withPdf') === 'withPdf') {
             $this->generatePdf($bill);
         }
-
-        $this->addFlash('success', 'Le devis a été créé.');
 
         return $this->redirectToRoute('bills');
     }

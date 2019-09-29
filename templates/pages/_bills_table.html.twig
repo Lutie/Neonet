@@ -30,7 +30,7 @@
                 </td>
                 <td class="text-center">
                     <a href="{{ path('bill-delete', { id:bill.id, token:mon_token }) }}"
-                       class="btn btn-danger btn-block confirmation-required">Supprimer</a>
+                       class="btn btn-danger btn-block confirmation-required" data-text="La facture sera définitivement supprimée.">Supprimer</a>
                 </td>
             </tr>
         {% endfor %}
