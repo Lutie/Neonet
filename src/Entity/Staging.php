@@ -74,13 +74,11 @@ class Staging
 
     /**
      * @ORM\Column( type="boolean" )
-     * TODO : sur le formulaire si false alors "fournir standard à utiliser"
      */
     private $hoist_standard = false;
 
     /**
      * @ORM\Column(type="array")
-     * TODO V2 : associer des entities à la place
      */
     private $staging_type = [];
 
@@ -124,16 +122,104 @@ class Staging
      * si $staging_type contains TV
      * array : LG, Samsung, Philips, stb_LG
      * @ORM\Column( type="array" )
-     * TODO V2 : associer des entities à la place
      */
     private $staging_brand = [];
 
     /**
      * si $staging_type contains TV
      * @ORM\Column( type="array" )
-     * TODO V2 : associer des entities à la place
      */
     private $gui_type = [];
+
+    // liste de ssid avec nom / zone
+    // la liste doit s'étendre à mesure qu'il ajoute des éléments
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $ssid_list;
+
+    /**
+     * si $staging_type contains Wifi
+     * array : ruckus, alcatel, aruba
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255)
+     */
+    private $head_brand = [];
+
+    // type de zone contrôleur
+    // un peu comme le type de tv mais un seul choix (parmis une liste dans une table)
+    /**
+     * si $staging_type contains TV
+     * @ORM\Column(type="array")
+     */
+    private $controller_brand = [];
+
+    // si Wifi ET TV
+    // checkbox true/false
+    // TV branchée sur borne Wifi
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $tv_on_wifi;
+
+    // Si Chromcast ET pas de Wifi
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255)
+     */
+    private $ssid_wifi;
+
+    // Si Chromcast ET pas de Wifi (?)
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255)
+     */
+    private $vlan_wifi;
+
+    // Si Chromcast ET pas de Wifi (?)
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255)
+     */
+    private $guest_ip;
+
+    // Si Chromcast ET pas de Wifi (?)
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255)
+     */
+    private $ssid_vlan;
+
+    // Si LAN
+    // "fournir tous les services, plan d'addressage, VLAN, DHCP, qui doivent être configurés"
+
+    // Si LAN
+    // joindre un fichier (xls)
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $lan_filename;
+
+    // Si switch
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Type("integer")
+     */
+    private $switch_quantity;
+
+    // Si switch
+    // type de zone trader_cdlgapsidesidewhitech
+    // un peu comme le type de tv mais un seul choix (parmis une liste dans une table)
+    // hp, sisco, alcatel, brocad
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $trader;
 
     /**
      * @return mixed
@@ -407,98 +493,180 @@ class Staging
         $this->delivery_date = $delivery_date;
     }
 
-    // Si Wifi
-    // "n'oubliez pas de créer la rate card"
-
-    // liste de ssid avec nom / zone
-    // la liste doit s'étendre à mesure qu'il ajoute des éléments
     /**
-     * @ORM\Column(type="array")
+     * @return mixed
      */
-    private $ssid_list;
+    public function getSsidList()
+    {
+        return $this->ssid_list;
+    }
 
     /**
-     * si $staging_type contains Wifi
-     * array : ruckus, alcatel, aruba
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Type("string")
-     * @Assert\Length(max=255)
-     * TODO V2 : associer des entities à la place
+     * @param mixed $ssid_list
      */
-    private $head_brand = [];
+    public function setSsidList($ssid_list): void
+    {
+        $this->ssid_list = $ssid_list;
+    }
 
-    // type de zone contrôleur
-    // un peu comme le type de tv mais un seul choix (parmis une liste dans une table)
     /**
-     * si $staging_type contains TV
-     * @ORM\Column(type="array")
+     * @return mixed
      */
-    private $controller_brand = [];
+    public function getHeadBrand()
+    {
+        return $this->head_brand;
+    }
 
-    // si Wifi ET TV
-    // checkbox true/false
-    // TV branchée sur borne Wifi
     /**
-     * @ORM\Column(type="boolean")
+     * @param mixed $head_brand
      */
-    private $tv_on_wifi;
+    public function setHeadBrand($head_brand): void
+    {
+        $this->head_brand = $head_brand;
+    }
 
-    // Si Chromcast ET pas de Wifi
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Type("string")
-     * @Assert\Length(max=255)
+     * @return mixed
      */
-    private $ssid_wifi;
+    public function getControllerBrand()
+    {
+        return $this->controller_brand;
+    }
 
-    // Si Chromcast ET pas de Wifi (?)
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Type("string")
-     * @Assert\Length(max=255)
+     * @param mixed $controller_brand
      */
-    private $vlan_wifi;
+    public function setControllerBrand($controller_brand): void
+    {
+        $this->controller_brand = $controller_brand;
+    }
 
-    // Si Chromcast ET pas de Wifi (?)
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Type("string")
-     * @Assert\Length(max=255)
+     * @return mixed
      */
-    private $guest_ip;
+    public function getTvOnWifi()
+    {
+        return $this->tv_on_wifi;
+    }
 
-    // Si Chromcast ET pas de Wifi (?)
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Type("string")
-     * @Assert\Length(max=255)
+     * @param mixed $tv_on_wifi
      */
-    private $ssid_vlan;
+    public function setTvOnWifi($tv_on_wifi): void
+    {
+        $this->tv_on_wifi = $tv_on_wifi;
+    }
 
-    // Si LAN
-    // "fournir tous les services, plan d'addressage, VLAN, DHCP, qui doivent être configurés"
-
-    // Si LAN
-    // joindre un fichier (xls)
     /**
-     * @ORM\Column(type="string")
+     * @return mixed
      */
-    private $lan_filename;
+    public function getSsidWifi()
+    {
+        return $this->ssid_wifi;
+    }
 
-    // Si switch
     /**
-     * @ORM\Column(type="integer")
-     * @Assert\Type("integer")
+     * @param mixed $ssid_wifi
      */
-    private $switch_quantity;
+    public function setSsidWifi($ssid_wifi): void
+    {
+        $this->ssid_wifi = $ssid_wifi;
+    }
 
-    // Si switch
-    // type de zone trader_cdlgapsidesidewhitech
-    // un peu comme le type de tv mais un seul choix (parmis une liste dans une table)
-    // hp, sisco, alcatel, brocad
     /**
-     * @ORM\Column(type="array")
+     * @return mixed
      */
-    private $trader;
+    public function getVlanWifi()
+    {
+        return $this->vlan_wifi;
+    }
+
+    /**
+     * @param mixed $vlan_wifi
+     */
+    public function setVlanWifi($vlan_wifi): void
+    {
+        $this->vlan_wifi = $vlan_wifi;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGuestIp()
+    {
+        return $this->guest_ip;
+    }
+
+    /**
+     * @param mixed $guest_ip
+     */
+    public function setGuestIp($guest_ip): void
+    {
+        $this->guest_ip = $guest_ip;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSsidVlan()
+    {
+        return $this->ssid_vlan;
+    }
+
+    /**
+     * @param mixed $ssid_vlan
+     */
+    public function setSsidVlan($ssid_vlan): void
+    {
+        $this->ssid_vlan = $ssid_vlan;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLanFilename()
+    {
+        return $this->lan_filename;
+    }
+
+    /**
+     * @param mixed $lan_filename
+     */
+    public function setLanFilename($lan_filename): void
+    {
+        $this->lan_filename = $lan_filename;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSwitchQuantity()
+    {
+        return $this->switch_quantity;
+    }
+
+    /**
+     * @param mixed $switch_quantity
+     */
+    public function setSwitchQuantity($switch_quantity): void
+    {
+        $this->switch_quantity = $switch_quantity;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTrader()
+    {
+        return $this->trader;
+    }
+
+    /**
+     * @param mixed $trader
+     */
+    public function setTrader($trader): void
+    {
+        $this->trader = $trader;
+    }
 
 }

@@ -2,8 +2,6 @@
 
 namespace App\Type;
 
-use App\Entity\Service;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -13,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ServiceType extends AbstractType
+class StagingType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -31,13 +29,13 @@ class ServiceType extends AbstractType
                 'label' => 'Numéro de téléphone du contact',
             ])
             ->add('contact_address', TextType::class, [
-                'label' => 'Numéro de téléphone du contact',
+                'label' => 'Addresse du contact',
             ])
             ->add('contact_zipcode', TextType::class, [
-                'label' => 'Numéro de téléphone du contact',
+                'label' => 'Numéro de zipcode du contact',
             ])
             ->add('contact_city', TextType::class, [
-                'label' => 'Numéro de téléphone du contact',
+                'label' => 'Ville du contact',
             ])
             ->add('delivery_date', DateType::class, [
                 'label' => 'Date de livraison',
@@ -159,6 +157,9 @@ class ServiceType extends AbstractType
                 'choices'  => [
                     'hp', 'sisco', 'alcatel', 'brocad'
                 ],
+            ])
+            ->add('description', TextareaType::class, [
+                'label' => 'Informations complémentaires',
             ]);
     }
 }
