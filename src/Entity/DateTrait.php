@@ -7,8 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 trait DateTrait
 {
     /**
-     * @ORM\Column( type="datetime" )
-     * @Assert\NotNull()
+     * @ORM\Column( type="datetime", nullable=true)
      * @Assert\Date()
      */
     private $date;

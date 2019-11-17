@@ -9,6 +9,8 @@ a.nav-link:active { color: #868686; }
 
 legend { width: 100%; border-bottom: #868686 1px solid; }
 
+.divider { height: 1px; background-color: black; width: 50%; margin: 8px 25%; opacity: .2; }
+
 .bg-dark-g { background: linear-gradient(to top, rgba(206,220,231,1) 0%,rgba(78,101,112,0.64) 100%); }
 .bg-grey-g { background: linear-gradient(to bottom, rgba(206,220,231,1) 0%,rgba(78,101,112,0.64) 100%); }
 .bg-white-g { background-image: linear-gradient(#f1f2f3, #565656); }

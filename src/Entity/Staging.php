@@ -25,49 +25,49 @@ class Staging
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull()
      * @Assert\Type("string")
      * @Assert\Length(max=255)
      */
     private $nasId;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Type("string")
      * @Assert\Length(max=255)
      */
     private $contact_name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Type("string")
      * @Assert\Length(max=20)
      */
     private $contact_phone;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Type("string")
      * @Assert\Length(max=255)
      */
     private $contact_address;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Type("string")
      * @Assert\Length(max=20)
      */
     private $contact_zipcode;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Type("string")
      * @Assert\Length(max=255)
      */
     private $contact_city;
 
     /**
-     * @ORM\Column( type="datetime" )
-     * @Assert\NotNull()
+     * @ORM\Column( type="datetime", nullable=true)
      * @Assert\Date()
      */
     private $delivery_date;
@@ -79,145 +79,139 @@ class Staging
 
     /**
      * @ORM\Column(type="array")
+     * @Assert\NotNull()
      */
     private $staging_type = [];
 
     /**
-     * si $staging_type contains TV
-     * @ORM\Column( type="boolean" )
+     * @ORM\Column( type="boolean", nullable=true )
      */
     private $streamer;
 
     /**
-     * si $staging_type contains TV
-     * @ORM\Column( type="boolean" )
+     * @ORM\Column( type="boolean", nullable=true )
      */
     private $vod;
 
     /**
-     * si $staging_type contains TV
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Type("string")
      * @Assert\Length(max=255)
      */
     private $tv_channel_plan;
 
     /**
-     * si $staging_type contains TV
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Type("string")
      * @Assert\Length(max=255)
      */
     private $radio_channel_plan;
 
     /**
-     * si $staging_type contains TV
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Type("string")
      * @Assert\Length(max=255)
      */
     private $room_list;
 
     /**
-     * si $staging_type contains TV
-     * array : LG, Samsung, Philips, stb_LG
-     * @ORM\Column( type="array" )
+     * @ORM\Column( type="array", nullable=true )
      */
-    private $staging_brand = [];
+    private $tv_brand = [];
 
     /**
-     * si $staging_type contains TV
-     * @ORM\Column( type="array" )
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255)
      */
-    private $gui_type = [];
+    private $gui_type;
 
     // liste de ssid avec nom / zone
     // la liste doit s'étendre à mesure qu'il ajoute des éléments
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="array", nullable=true)
      */
     private $ssid_list;
 
     /**
-     * si $staging_type contains Wifi
-     * array : ruckus, alcatel, aruba
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Type("string")
      * @Assert\Length(max=255)
      */
-    private $head_brand = [];
+    private $head_brand;
 
-    // type de zone contrôleur
-    // un peu comme le type de tv mais un seul choix (parmis une liste dans une table)
     /**
-     * si $staging_type contains TV
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $controller_brand = [];
+    private $controller_brand;
 
-    // si Wifi ET TV
-    // checkbox true/false
-    // TV branchée sur borne Wifi
     /**
      * @ORM\Column(type="boolean")
      */
-    private $tv_on_wifi;
+    private $tv_on_wifi = false;
 
     // Si Chromcast ET pas de Wifi
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Type("string")
      * @Assert\Length(max=255)
      */
     private $ssid_wifi;
 
-    // Si Chromcast ET pas de Wifi (?)
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Type("string")
      * @Assert\Length(max=255)
      */
     private $vlan_wifi;
 
-    // Si Chromcast ET pas de Wifi (?)
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Type("string")
      * @Assert\Length(max=255)
      */
     private $guest_ip;
 
-    // Si Chromcast ET pas de Wifi (?)
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Type("string")
      * @Assert\Length(max=255)
      */
     private $ssid_vlan;
 
-    // Si LAN
-    // "fournir tous les services, plan d'addressage, VLAN, DHCP, qui doivent être configurés"
-
-    // Si LAN
-    // joindre un fichier (xls)
     /**
-     * @ORM\Column(type="string")
+     * @Assert\File(
+     *     maxSize = "3k",
+     *     mimeTypes = {"application/pdf",
+     *          "text/plain",
+     *          "application/msword",
+     *          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+     *          "application/vnd.ms-powerpoint",
+     *          "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+     *          "application/vnd.ms-excel",
+     *          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
+     *     mimeTypesMessage = "Veuillez déposer un fichier (txt, doc, xls, etc...) valide (3mo maximum)"
+     * )
      */
-    private $lan_filename;
+    private $lan_file_upload;
 
-    // Si switch
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255)
+     */
+    private $lan_file_name;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
      * @Assert\Type("integer")
      */
     private $switch_quantity;
 
-    // Si switch
-    // type de zone trader_cdlgapsidesidewhitech
-    // un peu comme le type de tv mais un seul choix (parmis une liste dans une table)
-    // hp, sisco, alcatel, brocad
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255)
      */
     private $trader;
 
@@ -448,17 +442,17 @@ class Staging
     /**
      * @return mixed
      */
-    public function getStagingBrand()
+    public function getTvBrand()
     {
-        return $this->staging_brand;
+        return $this->tv_brand;
     }
 
     /**
-     * @param mixed $staging_brand
+     * @param mixed $tv_brand
      */
-    public function setStagingBrand($staging_brand): void
+    public function setTvBrand($tv_brand): void
     {
-        $this->staging_brand = $staging_brand;
+        $this->tv_brand = $tv_brand;
     }
 
     /**
@@ -667,6 +661,22 @@ class Staging
     public function setTrader($trader): void
     {
         $this->trader = $trader;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLanFileUpload()
+    {
+        return $this->lan_file_upload;
+    }
+
+    /**
+     * @param mixed $lan_file_upload
+     */
+    public function setLanFileUpload($lan_file_upload)
+    {
+        $this->lan_file_upload = $lan_file_upload;
     }
 
 }

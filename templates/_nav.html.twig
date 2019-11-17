@@ -6,28 +6,38 @@
 </a>
 
 <nav id="navbar" class="collapse show">
-    <ul class="nav nav-tabs nav-fill navbar-grey bg-grey-g d-flex flex-column flex-md-row">
-        {% if is_granted('ROLE_SUPER_ADMIN') %}
-        <li class="nav-item {{ route starts with 'users' ? 'active' }}">
-            <a href="{{ path('users') }}" class="nav-link">
-                <i class="fas fa-users fa-2x"></i> / Liste des utilisateurs</a>
-        </li>
-        <li class="nav-item {{ route starts with 'services' ? 'active' }}">
-            <a href="{{ path('services') }}" class="nav-link">
-                <i class="fas fa-handshake fa-2x"></i> / Liste des services</a>
-        </li>
-        <li class="nav-item {{ route starts with 'items' ? 'active' }}">
-            <a href="{{ path('items') }}" class="nav-link">
-                <i class="fas fa-sitemap fa-2x"></i> / Liste des options</a>
-        </li>
-        {% endif %}
-        <li class="nav-item {{ route starts with 'bills' ? 'active' }}">
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <ul class="nav nav-tabs nav-fill navbar-grey bg-grey-g d-flex flex-column flex-md-row">
+            <li class="nav-item {{ route starts with 'user' ? 'active' }}">
+                <a href="{{ path('users') }}" class="nav-link">
+                    <i class="fas fa-users fa-2x"></i> / Liste des utilisateurs</a>
+            </li>
+            <li class="nav-item {{ route starts with 'service' ? 'active' }}">
+                <a href="{{ path('services') }}" class="nav-link">
+                    <i class="fas fa-handshake fa-2x"></i> / Liste des services</a>
+            </li>
+            <li class="nav-item {{ route starts with 'item' ? 'active' }}">
+                <a href="{{ path('items') }}" class="nav-link">
+                    <i class="fas fa-sitemap fa-2x"></i> / Liste des options</a>
+            </li>
+        </ul>
+    {% endif %}
+    <ul class="nav py-2 nav-tabs nav-fill navbar-grey bg-grey-g d-flex flex-column flex-md-row">
+        <li class="nav-item {{ route starts with 'bill' ? 'active' }}">
             <a href="{{ path('bills') }}" class="nav-link">
                 <i class="fas fa-copy fa-2x"></i> / Liste des devis</a>
         </li>
-        <li class="nav-item {{ route starts with 'bills' ? 'active' }}">
+        <li class="nav-item {{ route starts with 'bill' ? 'active' }}">
             <a href="{{ path('bill-create') }}" class="nav-link">
                 <i class="fas fa-copy fa-2x"></i> / Créer un devis</a>
+        </li>
+        <li class="nav-item {{ route starts with 'staging' ? 'active' }}">
+            <a href="{{ path('stagings') }}" class="nav-link">
+                <i class="fas fa-copy fa-2x"></i> / Liste des stagings</a>
+        </li>
+        <li class="nav-item {{ route starts with 'staging' ? 'active' }}">
+            <a href="{{ path('staging-create') }}" class="nav-link">
+                <i class="fas fa-copy fa-2x"></i> / Créer un staging</a>
         </li>
     </ul>
 </nav>

@@ -17,15 +17,15 @@ class StagingType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom du service',
+                'label' => 'Nom du service (*)',
             ])
-            ->add('nasId', IntegerType::class, [
-                'label' => 'Id du NAS',
+            ->add('nasId', TextType::class, [
+                'label' => 'ID du NAS (*)',
             ])
             ->add('contact_name', TextType::class, [
                 'label' => 'Nom du contact',
             ])
-            ->add('contact_name', TextType::class, [
+            ->add('contact_phone', TextType::class, [
                 'label' => 'Numéro de téléphone du contact',
             ])
             ->add('contact_address', TextType::class, [
@@ -49,7 +49,8 @@ class StagingType extends AbstractType
                 ],
             ])
             ->add('staging_type', ChoiceType::class, [
-                'label' => 'Standard Hoist',
+                'label' => 'Type de staging (*)',
+                'empty_data' => null,
                 'multiple' => true,
                 'choices'  => [
                     'TV' => 1,
@@ -75,56 +76,49 @@ class StagingType extends AbstractType
                     'Oui' => true,
                 ],
             ])
-            ->add('tv_channel_plan', TextType::class, [
+            ->add('tv_channel_plan', TextareaType::class, [
                 'label' => 'Plan des chaines TV (ssi TV)',
             ])
-            ->add('radio_channel_plan', TextType::class, [
-                'label' => 'Plan des chaines Radios (ssi radio)',
-            ])
-            ->add('room_list', TextType::class, [
+            ->add('room_list', TextareaType::class, [
                 'label' => 'Liste des chambres (ssi TV)',
             ])
-            ->add('staging_brand', ChoiceType::class, [
+            ->add('tv_brand', ChoiceType::class, [
                 'label' => 'Marque(s) des TVs (ssi TV)',
                 'multiple' => true,
                 'choices'  => [
-                    'LG',
-                    'Samsung',
-                    'Philips',
-                    'stb_LG'
+                    'LG' => 'LG',
+                    'Samsung' => 'Samsung',
+                    'Philips' => 'Philips',
+                    'stb_LG' => 'stb_LG'
                 ],
             ])
-            ->add('staging_type', ChoiceType::class, [
-                'label' => 'Standard Hoist (ssi TV)',
-                'multiple' => true,
+            ->add('gui_type', ChoiceType::class, [
+                'label' => 'gui_type (?) (ssi TV)',
                 'choices'  => [
-                    'TV' => 1,
-                    'Wifi' => 2,
-                    'Chromcast' => 3,
-                    'Lan' => 4,
-                    'switch' => 5,
+                    'Raisonnance' => 'Raisonnance ',
+                    'autre' => 'autre',
                 ],
-            ])
-            ->add('name', TextType::class, [
-                'label' => 'Nom du service',
             ])
             ->add('head_brand', ChoiceType::class, [
                 'label' => 'Type de borne (ssi TV)',
                 'choices'  => [
-                    'ruckus',
-                    'alcatel',
-                    'aruba'
+                    'ruckus' => 'ruckus',
+                    'alcatel' => 'alcatel',
+                    'aruba' => 'aruba',
                 ],
             ])
             ->add('controller_brand', ChoiceType::class, [
                 'label' => 'Contrôleur de zone (ssi TV)',
                 'choices'  => [
-                    'aucun',
-                    'zonedirector',
-                    'smartzone',
-                    'virtualsmartzone',
-                    'autre'
+                    'aucun' => 'aucun',
+                    'zonedirector' => 'zonedirector',
+                    'smartzone' => 'smartzone',
+                    'virtualsmartzone' => 'virtualsmartzone',
+                    'autre' => 'autre',
                 ],
+            ])
+            ->add('radio_channel_plan', TextareaType::class, [
+                'label' => 'Plan des chaines Radios (ssi radio)',
             ])
             ->add('tv_on_wifi', ChoiceType::class, [
                 'label' => 'TV branchée à la borne WIFI (ssi wifi et tv)',
@@ -146,7 +140,7 @@ class StagingType extends AbstractType
             ->add('ssid_vlan', TextType::class, [
                 'label' => 'VLAN SSID Chromcast (ssi Chromcast ET pas de Wifi)',
             ])
-            ->add('lan_file', FileType::class, [
+            ->add('lan_file_upload', FileType::class, [
                 'label' => 'Fournir tous les services, plan d\'addressage, VLAN, DHCP, qui doivent être configurés',
             ])
             ->add('switch_quantity', IntegerType::class, [
@@ -155,7 +149,10 @@ class StagingType extends AbstractType
             ->add('trader', ChoiceType::class, [
                 'label' => 'type de zone trader (ssi switch)',
                 'choices'  => [
-                    'hp', 'sisco', 'alcatel', 'brocad'
+                    'hp'  => '',
+                    'sisco'  => '',
+                    'alcatel'  => '',
+                    'brocad'  => '',
                 ],
             ])
             ->add('description', TextareaType::class, [

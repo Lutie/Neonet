@@ -7,11 +7,90 @@
     <legend class="mb-4"></legend>
 
     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
-    <button type="submit" class="btn btn-primary offset-5 col-2">{{ task }}</button>
+    <button type="submit" class="btn btn-primary offset-5 col-2 mb-4">{{ task }}</button>
+
+    <div class="row">
+        <div class="col-6"> {{ form_row(form.name) }} </div>
+        <div class="col-3"> {{ form_row(form.nasId) }} </div>
+    </div>
+    <div class="row">
+        <div class="col-3"> {{ form_row(form.contact_name) }} </div>
+        <div class="col-3"> {{ form_row(form.contact_phone) }} </div>
+    </div>
+    <div class="row">
+        <div class="col-3"> {{ form_row(form.contact_zipcode) }} </div>
+        <div class="col-3"> {{ form_row(form.contact_city) }} </div>
+        <div class="col-6"> {{ form_row(form.contact_address) }} </div>
+    </div>
+    <div class="row">
+        <div class="col-3"> {{ form_row(form.delivery_date) }} </div>
+        <div class="col-3"> {{ form_row(form.hoist_standard) }} </div>
+        <div class="col-3"> {{ form_row(form.staging_type) }} </div>
+    </div>
+
+    {# $staging_type contains "tv" #}
+    <div class="divider"></div>
+    <h2>TV</h2>
+    <div class="row">
+        <div class="col-3"> {{ form_row(form.streamer) }} </div>
+        <div class="col-3"> {{ form_row(form.vod) }} </div>
+        <div class="col-3"> {{ form_row(form.tv_brand) }} </div>
+        <div class="col-12"> {{ form_row(form.tv_channel_plan) }} </div>
+        <div class="col-12"> {{ form_row(form.room_list) }} </div>
+        <div class="col-3"> {{ form_row(form.gui_type) }} </div>
+        <div class="col-3"> {{ form_row(form.head_brand) }} </div>
+        <div class="col-3"> {{ form_row(form.controller_brand) }} </div>
+    </div>
+
+    {# $staging_type contains "radio" #}
+    <div class="divider"></div>
+    <h2>Radio</h2>
+    <div class="row">
+        <div class="col-12"> {{ form_row(form.radio_channel_plan) }} </div>
+    </div>
+    
+    {# $staging_type contains "wifi" #}
+    <div class="divider"></div>
+    <h2>Wifi</h2>
+    {# "n'oubliez pas de créer la rate card" #}
+    
+    {# $staging_type contains "WiFi" et "tv" #}
+    <div class="divider"></div>
+    <h2>Wifi & TV</h2>
+    <div class="row">
+        <div class="col-3"> {{ form_row(form.tv_on_wifi) }} </div>
+    </div>
+    
+    {# $staging_type contains "WiFi" et "chromecast" #}
+    <div class="divider"></div>
+    <h2>Wifi & Chromecast</h2>
+    <div class="row">
+        <div class="col-3"> {{ form_row(form.vlan_wifi) }} </div>
+        <div class="col-3"> {{ form_row(form.guest_ip) }} </div>
+        <div class="col-3"> {{ form_row(form.ssid_vlan) }} </div>
+        <div class="col-3"> {{ form_row(form.ssid_wifi) }} </div>
+    </div>
+    
+    {# $staging_type contains "lan" #}
+    <div class="divider"></div>
+    <h2>Lan</h2>
+    {# "fournir tous les services, plan d'addressage, VLAN, DHCP, qui doivent être configurés" #}
+    <div class="row">
+        <div class="col-3"> {{ form_row(form.lan_file_upload) }} </div>
+    </div>
+    
+    {# $staging_type contains "switch" #}
+    <div class="divider"></div>
+    <h2>Switch</h2>
+    <div class="row">
+        <div class="col-3"> {{ form_row(form.switch_quantity) }} </div>
+        <div class="col-3"> {{ form_row(form.trader) }} </div>
+    </div>
+
+    <div class="divider"></div>
+
     {{ form_end(form) }}
 
     {# $hoist_standard === false : "fournir standard à utiliser" #}
-
-    {# $staging_type contains "wifi" : "n'oubliez pas de créer la rate card" #}
 
 {% endblock %}
