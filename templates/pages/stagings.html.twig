@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h1> Liste des stagings </h1>
+
+<legend class="mb-4"></legend>
+
+    <div class="table-responsive table-hover">
+        <table id="item-list" class="table table-bordered table-striped">
+
+            <thead>
+                <td class="col-xs-10 text-center">Titre</td>
+                <td class="col-xs-1 text-center"></td>
+                <td class="col-xs-1 text-center"></td>
+            </thead>
+
+            <tbody>
+                {% set mon_token = csrf_token('NNC_STAGING_SECURITY_TOKEN') %}
+                {% for staging in stagings %}
+                    <tr>
+                        <td class="text-center">{{ staging.name }}</td>
+                        <td>
+                            <a href="{{ path('staging-update', { id:staging.id, token:mon_token }) }}"
+                               class="btn btn-warning btn-block">Configurer</a>
+                        </td>
+                        <td>
+                            <a href="{{ path('staging-delete', { id:staging.id, token:mon_token }) }}"
+                               class="btn btn-danger btn-block confirmation-required" data-text="L'élément sera définitivement supprimé.">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

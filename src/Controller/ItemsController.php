@@ -29,7 +29,7 @@ class ItemsController extends AbstractController
     /**
      * @Route("/item-delete/{id}", name="item-delete", requirements={"id":"\d+"})
      */
-    public function deleteUser(Request $request, Item $item){
+    public function delete(Request $request, Item $item){
         $token = $request->query->get('token');
         if (($token === null)||(!$this->isCsrfTokenValid('NNC_ITEM_SECURITY_TOKEN', $token))) {
             throw $this->createNotFoundException();
@@ -47,7 +47,7 @@ class ItemsController extends AbstractController
     /**
      * @Route("/item-add", name="item-add")
      */
-    public function addService(Request $request){
+    public function add(Request $request){
         $item = new Item();
 
         $form = $this->createForm(ItemType::class, $item);
@@ -73,7 +73,7 @@ class ItemsController extends AbstractController
     /**
      * @Route("/item-update/{id}", name="item-update", requirements={"id":"\d+"})
      */
-    public function updateService(Request $request, Item $item)
+    public function update(Request $request, Item $item)
     {
         $token = $request->query->get('token');
         if (($token === null)||(!$this->isCsrfTokenValid('NNC_ITEM_SECURITY_TOKEN', $token))) {

@@ -21,6 +21,8 @@ class Staging
 
     use UserTrait;
 
+    use DescriptionTrait;
+
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Type("string")
@@ -71,25 +73,26 @@ class Staging
     private $delivery_date;
 
     /**
-     * true/false
-     * sur le formulaire si false alors "fournir standard à utiliser"
+     * @ORM\Column( type="boolean" )
+     * TODO : sur le formulaire si false alors "fournir standard à utiliser"
      */
-    private $hoist_standard;
+    private $hoist_standard = false;
 
     /**
-     * array : TV, Wifi, Chromcast, Lan, switch
+     * @ORM\Column(type="array")
+     * TODO V2 : associer des entities à la place
      */
-    private $staging_type;
+    private $staging_type = [];
 
     /**
      * si $staging_type contains TV
-     * true/false
+     * @ORM\Column( type="boolean" )
      */
     private $streamer;
 
     /**
      * si $staging_type contains TV
-     * true/false
+     * @ORM\Column( type="boolean" )
      */
     private $vod;
 
@@ -120,16 +123,17 @@ class Staging
     /**
      * si $staging_type contains TV
      * array : LG, Samsung, Philips, stb_LG
-     * via table
+     * @ORM\Column( type="array" )
+     * TODO V2 : associer des entities à la place
      */
-    private $staging_brand;
+    private $staging_brand = [];
 
     /**
      * si $staging_type contains TV
-     * array : ressonance icon, ressonance text, autre
-     * via table
+     * @ORM\Column( type="array" )
+     * TODO V2 : associer des entities à la place
      */
-    private $gui_type;
+    private $gui_type = [];
 
     /**
      * @return mixed
@@ -408,42 +412,93 @@ class Staging
 
     // liste de ssid avec nom / zone
     // la liste doit s'étendre à mesure qu'il ajoute des éléments
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $ssid_list;
 
-    // type de borne
-    // un peu comme le type de tv mais un seul choix (parmis une liste dans une table)
-    // dont : ruckus, alcatel, aruba
+    /**
+     * si $staging_type contains Wifi
+     * array : ruckus, alcatel, aruba
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255)
+     * TODO V2 : associer des entities à la place
+     */
+    private $head_brand = [];
 
     // type de zone contrôleur
     // un peu comme le type de tv mais un seul choix (parmis une liste dans une table)
-    // dont : aucun, zonedirector, smartzone, virtualsmartzone, autre
+    /**
+     * si $staging_type contains TV
+     * @ORM\Column(type="array")
+     */
+    private $controller_brand = [];
 
     // si Wifi ET TV
-
     // checkbox true/false
     // TV branchée sur borne Wifi
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $tv_on_wifi;
 
     // Si Chromcast ET pas de Wifi
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255)
+     */
+    private $ssid_wifi;
 
-    // SSID wifi (champs texte)
-    // VLAN wifi guest (champs texte)
-    // Address ip wifi guest (champs texte)
-    // VLAN SSID Chromcast (champs texte)
+    // Si Chromcast ET pas de Wifi (?)
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255)
+     */
+    private $vlan_wifi;
+
+    // Si Chromcast ET pas de Wifi (?)
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255)
+     */
+    private $guest_ip;
+
+    // Si Chromcast ET pas de Wifi (?)
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Type("string")
+     * @Assert\Length(max=255)
+     */
+    private $ssid_vlan;
 
     // Si LAN
     // "fournir tous les services, plan d'addressage, VLAN, DHCP, qui doivent être configurés"
 
+    // Si LAN
     // joindre un fichier (xls)
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $lan_filename;
 
     // Si switch
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Type("integer")
+     */
+    private $switch_quantity;
 
-    // nombre de switch (number)
-
+    // Si switch
     // type de zone trader_cdlgapsidesidewhitech
     // un peu comme le type de tv mais un seul choix (parmis une liste dans une table)
-    // dont : hp, sisco, alcatel, brocad
-
-    // all
-
-    // notes (texte, un bon gros texte)
+    // hp, sisco, alcatel, brocad
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $trader;
 
 }
