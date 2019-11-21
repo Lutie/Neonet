@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Staging;
 use App\Entity\User;
 use App\Type\StagingType;
+use App\Service\PdfRender;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,6 +63,7 @@ class StagingController extends AbstractController
             $user = $this->get('security.token_storage')->getToken()->getUser();
             if($user instanceof User) { $staging->setUser($user); } else { $staging->setUser(null); }
 
+            $staging->setModificationDate(new DateTime());
             $em = $this->getDoctrine()->getManager();
             $em->persist($staging);
             $em->flush();
@@ -91,6 +93,7 @@ class StagingController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $staging->setModificationDate(new DateTime());
             $em->persist($staging);
             $em->flush();
 
@@ -103,5 +106,43 @@ class StagingController extends AbstractController
             'form' => $form->createView(),
             'task' => 'Modifier'
         ]);
+    }
+
+    /**
+     * @Route("/staging-to-pdf/test", name="staging-pdf-test")
+     */
+    public function testToPdf()
+    {
+        $this->generatePdf();
+    }
+
+    /**
+     * @Route("/staging-to-pdf/{id}", requirements={"id":"\d+"}, name="staging-pdf")
+     */
+    public function stagingToPdf(Staging $staging)
+    {
+        $this->generatePdf($staging);
+    }
+
+    function generatePdf(Staging $staging = null) {
+        $staging = $staging ?? $this->fakeStaging();
+
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('pdf/template-staging.html.twig', [
+            'staging' => $staging,
+        ]);
+
+        $pdfRender = new PdfRender;
+        $pdfRender->generatePdf($html, $staging->getName());
+    }
+
+    function fakeStaging() {
+        $staging = new Staging();
+        $staging->setId(0);
+        $staging->setName("Staging de test");
+        $staging->setNasId("ceciestpasunid");
+        $staging->setStagingType(["TV", "Wifi", "Chromcast"]);
+        $staging->setUser(null);
+        return $staging;
     }
 }

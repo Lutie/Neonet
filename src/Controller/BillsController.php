@@ -7,8 +7,7 @@ use App\Entity\Item;
 use App\Entity\Service;
 use App\Entity\User;
 use App\Type\BillType;
-use Dompdf\Dompdf;
-use Dompdf\Options;
+use App\Service\PdfRender;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -307,37 +306,17 @@ class BillsController extends AbstractController
     function generatePdf(Bill $bill = null) {
         $bill = $bill ?? $this->fakeBill();
 
-        // Configure Dompdf according to your needs
-        $pdfOptions = new Options();
-        $pdfOptions->set('defaultFont', 'Arial');
-        $pdfOptions->setIsRemoteEnabled(true);
-
-        // Instantiate Dompdf with our options
-        $dompdf = new Dompdf($pdfOptions);
-
         // We get our services and items
         $datas = $this->fetchBillDatas($bill);
-
         // Retrieve the HTML generated in our twig file
-        $html = $this->renderView('pdf/template.html.twig', [
+        $html = $this->renderView('pdf/template-bill.html.twig', [
             'datas' => $datas,
             'nncLogoUrl' => getenv('NNC_LOGO_URL'),
             'partnerLogoUrl' => getenv('PARTNER_LOGO_URL'),
         ]);
 
-        // Load HTML to Dompdf
-        $dompdf->loadHtml($html);
-
-        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
-        $dompdf->setPaper('A4', 'portrait');
-
-        // Render the HTML as PDF
-        $dompdf->render();
-
-        // Output the generated PDF to Browser (inline view)
-        $dompdf->stream($bill->getName() . ".pdf", [
-            "Attachment" => false
-        ]);
+        $pdfRender = new PdfRender;
+        $pdfRender->generatePdf($html, $bill->getName());
     }
 
     function fakeBill() {

@@ -19,10 +19,7 @@ class Bill
 
     use NameTrait;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $modificationDate;
+    use ModificationDateTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="bills")
@@ -142,22 +139,6 @@ class Bill
     public function setUser($user): void
     {
         $this->user = $user;
-    }
-
-    /**
-     * @return object \DateTime
-     */
-    public function getModificationDate()
-    {
-        return $this->modificationDate;
-    }
-
-    /**
-     * @param \DateTime $modificationDate
-     */
-    public function setModificationDate($modificationDate): void
-    {
-        $this->modificationDate = $modificationDate;
     }
 
     public function drop(): void

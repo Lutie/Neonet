@@ -23,6 +23,8 @@ class Staging
 
     use DescriptionTrait;
 
+    use ModificationDateTrait;
+
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotNull()
