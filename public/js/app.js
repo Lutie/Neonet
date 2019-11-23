@@ -1,5 +1,27 @@
 $(document).ready(function () {
 
+    // staging form : type hook
+    $('#staging_staging_type').change(function () {
+        optionsSelected = $("option:selected", this);
+        optionsStates = []; // by ID, see form StagingType to learn about them
+        optionsSelected.each(function() {
+            optionsStates.push(this.value.toString());
+        });
+        $('.staging-block').each(function() {
+            requirements = $(this).data('requirements');
+            toggle = true;
+            for (i = 0; i < requirements.length; i++) {
+                console.log(optionsStates, requirements[i]);
+                if (!optionsStates.includes(requirements[i])) toggle = false;
+            }
+            toggle ? $(this).slideDown() : $(this).slideUp()
+        });
+    });
+    
+    $('.staging-block').each(function() {
+        $(this).slideUp()
+    });
+
     // Permet d'inclure une pop up de validation dans certains liens (comme ceux de suppression par exemple)
     $('.confirmation-required').click(function () {
         var text = $(this).data('text');
@@ -67,6 +89,7 @@ $(document).ready(function () {
 
         // we change the look of the PDF button if the option is check or not
         var pdfLabel = $('#pdfLabel');
+        if(document.getElementById('withPdf')) {
         if(document.getElementById('withPdf').value === 'withPdf') {
             pdfLabel.addClass( "btn-success");
             pdfLabel.removeClass( "btn-warning");
@@ -79,13 +102,13 @@ $(document).ready(function () {
             document.getElementsByClassName("withNoPdfIco")[0].hidden = false;
             document.getElementsByClassName("withPdfIco")[0].hidden = true;
             document.getElementsByClassName("withNoPdfText")[0].hidden = false;
-        }
+        }}
     }
-
 
     // we active or desactive submit depending on mandatories parameters
     var assertForm = function(){
         // title must have 4 or more characters
+        if(document.getElementById('title')) {
         var txt = $('#title').val().length;
         if(txt >= 4) {
             $('#bill-submit').prop('disabled', false);
@@ -95,7 +118,7 @@ $(document).ready(function () {
             $('#bill-submit').prop('disabled', true);
             $('#title-hint').show();
             $('#title').addClass("is-invalid");
-        }
+        }}
     }
 
     // this function recalculate all value in the sheet
@@ -147,7 +170,7 @@ $(document).ready(function () {
         changeForm();
     });
 
-    // once : recalculate the values, usefull is the bill is loaded from datas
+    // once : recalculate the values, usefull if the bill is loaded from datas
     recalc();
 
     // once : change visibility of services, usefull is the bill is loaded from datas
@@ -155,5 +178,4 @@ $(document).ready(function () {
 
     //
     assertForm();
-
 });

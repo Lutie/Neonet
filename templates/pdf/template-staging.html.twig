@@ -19,7 +19,60 @@
 
 </head>
 <body>
-
-    Staging lol
+    <h2> Fiche de préparation de staging </h2>
+    <legend class="mb-4"></legend>
+    <div class="row">
+        <div class="col-6"> 
+            <p><strong>Nom</strong></p>
+            <p>{{staging.name}}</p>
+        </div>
+        <div class="col-3"> 
+            <p><strong>NAS ID</strong></p>
+            <p>{{staging.nasId}}</p>
+        </div>
+    </div>
+    <div class="divider"></div>
+    <div class="row">
+        <div class="col-3"> 
+            <p><strong>Nom du contact</strong></p>
+            <p>{{staging.contactName ?? "non renseigné"}}</p>
+        </div>
+        <div class="col-3"> 
+            <p><strong>N° de tél du contact</strong></p>
+            <p>{{staging.contactPhone ?? "non renseigné"}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3"> 
+            <p><strong>Zipcode du contact</strong></p>
+            <p>{{staging.contactZipcode ?? "non renseigné"}}</p>
+        </div>
+        <div class="col-3"> 
+            <p><strong>Ville du contact</strong></p>
+            <p>{{staging.contactCity ?? "non renseigné"}}</p>
+        </div>
+        <div class="col-6"> 
+            <p><strong>Addresse du contact</strong></p>
+            <p>{{staging.contactAddress ?? "non renseigné"}}</p>
+        </div>
+    </div>
+    <div class="divider"></div>
+    <div class="row">
+        <div class="col-3"> 
+            <p><strong>Date de livraison</strong></p>
+            <p>{{staging.deliveryDate ? staging.deliveryDate|date("d/m/Y") : "non renseigné"}}</p>
+        </div>
+        <div class="col-3"> 
+            <p><strong>Standards Hoist</strong></p>
+            <p>{{staging.hoistStandard ? "Respectés" : "Non respectés"}}</p>
+        </div>
+        <div class="col-3"> 
+            <p><strong>Type de Staging</strong></p>
+            <p>{% for type in staging.stagingType %}
+            {{type == 1 ? "TV" : type == 2 ? "Wifi" : type == 3 ? "Chromcast" : type == 4 ? "Lan" : type == 5 ? "Switch" :type == 6 ? "Radio" : ""}}
+            {{loop.last ? "" : ","}}{% endfor %}</p>
+        </div>
+    </div>
+    <div class="divider"></div>
 
 </body>

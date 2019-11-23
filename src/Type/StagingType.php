@@ -57,7 +57,8 @@ class StagingType extends AbstractType
                     'Wifi' => 2,
                     'Chromcast' => 3,
                     'Lan' => 4,
-                    'switch' => 5,
+                    'Switch' => 5,
+                    'Radio' => 6,
                 ],
             ])
             ->add('streamer', ChoiceType::class, [
