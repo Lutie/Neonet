@@ -701,4 +701,36 @@ class Staging
         $this->lan_file_upload = $lan_file_upload;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getLicenseNasId()
+    {
+        return $this->license_nasId;
+    }
+
+    /**
+     * @param mixed $license_nasId
+     */
+    public function setLicenseNasId($license_nasId): void
+    {
+        $this->license_nasId = $license_nasId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStandardFileUpload()
+    {
+        return $this->standard_file_upload;
+    }
+
+    /**
+     * @param mixed $standard_file_upload
+     */
+    public function setStandardFileUpload($standard_file_upload): void
+    {
+        $this->standard_file_upload = $standard_file_upload;
+    }
+
 }
