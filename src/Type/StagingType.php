@@ -17,28 +17,36 @@ class StagingType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom du service (*)',
+                'label' => 'Nom de l\'hotel (*)',
             ])
             ->add('nasId', TextType::class, [
-                'label' => 'ID du NAS (*)',
+                'label' => 'NASID (*)',
+            ])
+            ->add('license_nasId', ChoiceType::class, [
+                'label' => 'License NASID commandée ? (*)',
+                'empty_data' => false,
+                'choices'  => [
+                    'Non' => false,
+                    'Oui' => true,
+                ],
             ])
             ->add('contact_name', TextType::class, [
                 'label' => 'Nom du contact',
             ])
             ->add('contact_phone', TextType::class, [
-                'label' => 'Numéro de téléphone du contact',
+                'label' => 'Numéro de téléphone',
             ])
             ->add('contact_address', TextType::class, [
-                'label' => 'Addresse du contact',
+                'label' => 'Adresse',
             ])
             ->add('contact_zipcode', TextType::class, [
-                'label' => 'Numéro de zipcode du contact',
+                'label' => 'Code postal',
             ])
             ->add('contact_city', TextType::class, [
-                'label' => 'Ville du contact',
+                'label' => 'Ville',
             ])
             ->add('delivery_date', DateType::class, [
-                'label' => 'Date de livraison',
+                'label' => 'Date de livraison souhaitée',
             ])
             ->add('hoist_standard', ChoiceType::class, [
                 'label' => 'Standard Hoist',
@@ -47,6 +55,9 @@ class StagingType extends AbstractType
                     'Non' => false,
                     'Oui' => true,
                 ],
+            ])
+            ->add('standard_file_upload', FileType::class, [
+                'label' => 'Fournir les standards à appliquer',
             ])
             ->add('staging_type', ChoiceType::class, [
                 'label' => 'Type de staging (*)',
@@ -62,7 +73,7 @@ class StagingType extends AbstractType
                 ],
             ])
             ->add('streamer', ChoiceType::class, [
-                'label' => 'Streamer (ssi TV)',
+                'label' => 'Streamer',
                 'empty_data' => false,
                 'choices'  => [
                     'Non' => false,
@@ -70,7 +81,7 @@ class StagingType extends AbstractType
                 ],
             ])
             ->add('vod', ChoiceType::class, [
-                'label' => 'VOD (ssi TV)',
+                'label' => 'VOD',
                 'empty_data' => false,
                 'choices'  => [
                     'Non' => false,
@@ -78,13 +89,13 @@ class StagingType extends AbstractType
                 ],
             ])
             ->add('tv_channel_plan', TextareaType::class, [
-                'label' => 'Plan des chaines TV (ssi TV)',
+                'label' => 'Plan des chaines TV',
             ])
             ->add('room_list', TextareaType::class, [
-                'label' => 'Liste des chambres (ssi TV)',
+                'label' => 'Liste des chambres',
             ])
             ->add('tv_brand', ChoiceType::class, [
-                'label' => 'Marque(s) des TVs (ssi TV)',
+                'label' => 'Marque(s) des TVs',
                 'multiple' => true,
                 'choices'  => [
                     'LG' => 'LG',
@@ -94,14 +105,15 @@ class StagingType extends AbstractType
                 ],
             ])
             ->add('gui_type', ChoiceType::class, [
-                'label' => 'gui_type (?) (ssi TV)',
+                'label' => 'Type de gui',
                 'choices'  => [
-                    'Raisonnance' => 'Raisonnance ',
+                    'Resonance' => 'Resonance',
+                    'Harmonic' => 'Harmonic',
                     'autre' => 'autre',
                 ],
             ])
             ->add('head_brand', ChoiceType::class, [
-                'label' => 'Type de borne (ssi TV)',
+                'label' => 'Type de borne',
                 'choices'  => [
                     'ruckus' => 'ruckus',
                     'alcatel' => 'alcatel',
@@ -109,7 +121,7 @@ class StagingType extends AbstractType
                 ],
             ])
             ->add('controller_brand', ChoiceType::class, [
-                'label' => 'Contrôleur de zone (ssi TV)',
+                'label' => 'Contrôleur de zone',
                 'choices'  => [
                     'aucun' => 'aucun',
                     'zonedirector' => 'zonedirector',
@@ -119,10 +131,10 @@ class StagingType extends AbstractType
                 ],
             ])
             ->add('radio_channel_plan', TextareaType::class, [
-                'label' => 'Plan des chaines Radios (ssi radio)',
+                'label' => 'Plan des chaines Radios',
             ])
             ->add('tv_on_wifi', ChoiceType::class, [
-                'label' => 'TV branchée à la borne WIFI (ssi wifi et tv)',
+                'label' => 'TV branchée à la borne WIFI',
                 'empty_data' => false,
                 'choices'  => [
                     'Non' => false,
@@ -130,13 +142,13 @@ class StagingType extends AbstractType
                 ],
             ])
             ->add('ssid_wifi', TextType::class, [
-                'label' => 'SSID wifi (ssi Chromcast ET pas de Wifi)',
+                'label' => 'Guest SSID (ssi Chromcast ET pas de Wifi)',
             ])
             ->add('vlan_wifi', TextType::class, [
                 'label' => 'VLAN wifi guest (ssi Chromcast ET pas de Wifi)',
             ])
             ->add('guest_ip', TextType::class, [
-                'label' => ' Address ip wifi guest (ssi Chromcast ET pas de Wifi)',
+                'label' => 'Address ip wifi guest (ssi Chromcast ET pas de Wifi)',
             ])
             ->add('ssid_vlan', TextType::class, [
                 'label' => 'VLAN SSID Chromcast (ssi Chromcast ET pas de Wifi)',
@@ -145,10 +157,10 @@ class StagingType extends AbstractType
                 'label' => 'Fournir tous les services, plan d\'addressage, VLAN, DHCP, qui doivent être configurés',
             ])
             ->add('switch_quantity', IntegerType::class, [
-                'label' => 'Quantité de switch (ssi switch)',
+                'label' => 'Quantité de switch',
             ])
             ->add('trader', ChoiceType::class, [
-                'label' => 'type de zone trader (ssi switch)',
+                'label' => 'Type de switch',
                 'choices'  => [
                     'hp'  => '',
                     'sisco'  => '',

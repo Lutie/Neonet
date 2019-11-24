@@ -27,7 +27,7 @@
             <p>{{staging.name}}</p>
         </div>
         <div class="col-3"> 
-            <p><strong>NAS ID</strong></p>
+            <p><strong>NASID</strong></p>
             <p>{{staging.nasId}}</p>
         </div>
     </div>
@@ -69,10 +69,11 @@
         <div class="col-3"> 
             <p><strong>Type de Staging</strong></p>
             <p>{% for type in staging.stagingType %}
-            {{type == 1 ? "TV" : type == 2 ? "Wifi" : type == 3 ? "Chromcast" : type == 4 ? "Lan" : type == 5 ? "Switch" :type == 6 ? "Radio" : ""}}
-            {{loop.last ? "" : ","}}{% endfor %}</p>
+            {{type == 1 ? "TV" : type == 2 ? "Wifi" : type == 3 ? "Chromcast" : type == 4 ? "Lan" : type == 5 ? "Switch" :type == 6 ? "Radio" : ""}}{{loop.last ? "" : ","}}{% endfor %}</p>
         </div>
     </div>
+
+    <p>{{staging.description}}</p>
     <div class="divider"></div>
 
 </body>

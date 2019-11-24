@@ -27,11 +27,17 @@ class Staging
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotNull()
+     * @Assert\NotNull(message="NASID nécessaire !")
      * @Assert\Type("string")
      * @Assert\Length(max=255)
      */
     private $nasId;
+
+    /**
+     * @ORM\Column( type="boolean" )
+     * @Assert\IsTrue(message="License nécessaire !")
+     */
+    private $license_nasId = false;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -78,6 +84,21 @@ class Staging
      * @ORM\Column( type="boolean" )
      */
     private $hoist_standard = false;
+
+    /**
+     * @Assert\File(
+     *     maxSize = "3k",
+     *     mimeTypes = {"application/pdf",
+     *          "text/plain",
+     *          "application/msword",
+     *          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+     *          "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+     *          "application/vnd.ms-excel",
+     *          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
+     *     mimeTypesMessage = "Veuillez déposer un fichier (txt, doc, xls, etc...) valide (3mo maximum)"
+     * )
+     */
+    private $standard_file_upload;
 
     /**
      * @ORM\Column(type="array")
@@ -188,7 +209,6 @@ class Staging
      *          "text/plain",
      *          "application/msword",
      *          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-     *          "application/vnd.ms-powerpoint",
      *          "application/vnd.openxmlformats-officedocument.presentationml.presentation",
      *          "application/vnd.ms-excel",
      *          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
