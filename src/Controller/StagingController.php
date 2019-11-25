@@ -59,12 +59,28 @@ class StagingController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $user = $this->get('security.token_storage')->getToken()->getUser();
             if($user instanceof User) { $staging->setUser($user); } else { $staging->setUser(null); }
-
             $staging->setModificationDate(new DateTime());
+
             $em = $this->getDoctrine()->getManager();
+            $em->persist($staging);
+            $em->flush();
+
+            if ($staging->getStandardFileUpload()) {
+                $standardFileUpload = $form['standard_file_upload']->getData();
+                $newName = $staging->getName() . ' - standard' . '.' . $standardFileUpload->guessClientExtension();
+                $standardFileUpload->move($this->getParameter('files_directory'), $newName);
+                $staging->setStandardFilePath($newName);
+            }
+
+            if ($staging->getLanFileUpload()) {
+                $lanFileUpload = $form['lan_file_upload']->getData();
+                $newName = $staging->getName() . ' - lan' . '.' . $lanFileUpload->guessClientExtension();
+                $lanFileUpload->move($this->getParameter('files_directory'), $newName);
+                $staging->setLanFilePath($newName);
+            }
+            
             $em->persist($staging);
             $em->flush();
 
@@ -94,10 +110,31 @@ class StagingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $staging->setModificationDate(new DateTime());
+
+            $em = $this->getDoctrine()->getManager();
             $em->persist($staging);
             $em->flush();
 
-            $this->addFlash('success', 'Le staging ' . $item->getName() . ' a été modifié.');
+            if ($staging->getStandardFileUpload()) {
+                $standardFileUpload = $form['standard_file_upload']->getData();
+                $newName = $staging->getName() . ' - standard' . '.' . $standardFileUpload->guessClientExtension();
+                $directory = $this->getParameter('kernel.project_dir') . '/web/uploads/files';
+                $standardFileUpload->move($directory, $newName);
+                $staging->setStandardFilePath($directory . '/' . $newName);
+            }
+
+            if ($staging->getLanFileUpload()) {
+                $lanFileUpload = $form['lan_file_upload']->getData();
+                $newName = $staging->getName() . ' - lan' . '.' . $lanFileUpload->guessClientExtension();
+                $directory = $this->getParameter('kernel.project_dir') . '/web/uploads/files';
+                $lanFileUpload->move($directory, $newName);
+                $staging->setStandardFilePath($directory . '/' . $newName);
+            }
+            
+            $em->persist($staging);
+            $em->flush();
+
+            $this->addFlash('success', 'Le staging ' . $staging->getName() . ' a été modifié.');
 
             return $this->redirectToRoute('stagings');
         }

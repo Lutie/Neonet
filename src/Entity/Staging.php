@@ -83,7 +83,7 @@ class Staging
     /**
      * @ORM\Column( type="boolean" )
      */
-    private $hoist_standard = false;
+    private $hoist_standard = true;
 
     /**
      * @Assert\File(
@@ -99,6 +99,11 @@ class Staging
      * )
      */
     private $standard_file_upload;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $standard_file_path;
 
     /**
      * @ORM\Column(type="array")
@@ -216,6 +221,11 @@ class Staging
      * )
      */
     private $lan_file_upload;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $lan_file_path;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -688,22 +698,6 @@ class Staging
     /**
      * @return mixed
      */
-    public function getLanFileUpload()
-    {
-        return $this->lan_file_upload;
-    }
-
-    /**
-     * @param mixed $lan_file_upload
-     */
-    public function setLanFileUpload($lan_file_upload)
-    {
-        $this->lan_file_upload = $lan_file_upload;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getLicenseNasId()
     {
         return $this->license_nasId;
@@ -720,6 +714,22 @@ class Staging
     /**
      * @return mixed
      */
+    public function getLanFileUpload()
+    {
+        return $this->lan_file_upload;
+    }
+
+    /**
+     * @param mixed $lan_file_upload
+     */
+    public function setLanFileUpload($lan_file_upload)
+    {
+        $this->lan_file_upload = $lan_file_upload;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getStandardFileUpload()
     {
         return $this->standard_file_upload;
@@ -731,6 +741,38 @@ class Staging
     public function setStandardFileUpload($standard_file_upload): void
     {
         $this->standard_file_upload = $standard_file_upload;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLanFilePath()
+    {
+        return $this->lan_file_path;
+    }
+
+    /**
+     * @param mixed $lan_file_path
+     */
+    public function setLanFilePath($lan_file_path): void
+    {
+        $this->lan_file_path = $lan_file_path;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStandardFilePath()
+    {
+        return $this->standard_file_path;
+    }
+
+    /**
+     * @param mixed $standard_file_path
+     */
+    public function setStandardFilePath($standard_file_path): void
+    {
+        $this->standard_file_path = $standard_file_path;
     }
 
 }

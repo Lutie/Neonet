@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-    // staging form : type hook
     $('#staging_staging_type').change(function () {
         optionsSelected = $("option:selected", this);
         optionsStates = []; // by ID, see form StagingType to learn about them
@@ -11,7 +10,6 @@ $(document).ready(function () {
             requirements = $(this).data('requirements');
             toggle = true;
             for (i = 0; i < requirements.length; i++) {
-                console.log(optionsStates, requirements[i]);
                 if (!optionsStates.includes(requirements[i])) toggle = false;
             }
             toggle ? $(this).slideDown() : $(this).slideUp()

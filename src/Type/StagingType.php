@@ -23,7 +23,7 @@ class StagingType extends AbstractType
                 'label' => 'NASID (*)',
             ])
             ->add('license_nasId', ChoiceType::class, [
-                'label' => 'License NASID commandée ? (*)',
+                'label' => 'Licenses commandées ? (*)',
                 'empty_data' => false,
                 'choices'  => [
                     'Non' => false,
@@ -47,13 +47,14 @@ class StagingType extends AbstractType
             ])
             ->add('delivery_date', DateType::class, [
                 'label' => 'Date de livraison souhaitée',
+                'widget' => 'choice',
+                'years' => range(date('Y'), date('Y') + 2),
             ])
             ->add('hoist_standard', ChoiceType::class, [
                 'label' => 'Standard Hoist',
-                'empty_data' => false,
                 'choices'  => [
-                    'Non' => false,
                     'Oui' => true,
+                    'Non' => false,
                 ],
             ])
             ->add('standard_file_upload', FileType::class, [
@@ -66,7 +67,7 @@ class StagingType extends AbstractType
                 'choices'  => [
                     'TV' => 1,
                     'Wifi' => 2,
-                    'Chromcast' => 3,
+                    'Chromecast' => 3,
                     'Lan' => 4,
                     'Switch' => 5,
                     'Radio' => 6,
@@ -142,16 +143,16 @@ class StagingType extends AbstractType
                 ],
             ])
             ->add('ssid_wifi', TextType::class, [
-                'label' => 'Guest SSID (ssi Chromcast ET pas de Wifi)',
+                'label' => 'Guest SSID (ssi Chromecast ET pas de Wifi)',
             ])
             ->add('vlan_wifi', TextType::class, [
-                'label' => 'VLAN wifi guest (ssi Chromcast ET pas de Wifi)',
+                'label' => 'VLAN wifi guest (ssi Chromecast ET pas de Wifi)',
             ])
             ->add('guest_ip', TextType::class, [
-                'label' => 'Address ip wifi guest (ssi Chromcast ET pas de Wifi)',
+                'label' => 'Address ip wifi guest (ssi Chromecast ET pas de Wifi)',
             ])
             ->add('ssid_vlan', TextType::class, [
-                'label' => 'VLAN SSID Chromcast (ssi Chromcast ET pas de Wifi)',
+                'label' => 'VLAN SSID Chromecast (ssi Chromecast ET pas de Wifi)',
             ])
             ->add('lan_file_upload', FileType::class, [
                 'label' => 'Fournir tous les services, plan d\'addressage, VLAN, DHCP, qui doivent être configurés',

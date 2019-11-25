@@ -2,11 +2,13 @@
     <table id="item-list" class="table table-bordered table-striped">
 
         <thead>
-            <td class="col-xs-1 text-center sorter-false filter-false">Générer PDF</td>
+            <td class="col-xs-1 text-center sorter-false filter-false">Générer</br>PDF</td>
             <td class="col-xs-1 text-center">Titre</td>
             <td class="col-xs-1 text-center">Création</td>
-            <td class="col-xs-1 text-center">Dernière modification</td>
+            <td class="col-xs-1 text-center">Dernière</br>Modification</td>
             <td class="col-xs-1 text-center">Auteur</td>
+            <td class="col-xs-1 text-center">Fichiers</br>LAN</td>
+            <td class="col-xs-1 text-center">Fichiers</br>Standards</td>
             <td class="col-xs-1 text-center sorter-false filter-false">Modifier</td>
             <td class="col-xs-1 text-center sorter-false filter-false">Supprimer</td>
         </thead>
@@ -16,12 +18,22 @@
             {% for staging in stagings %}
                 <tr>
                     <td class="text-center">
-                        <a href="{{ path('staging-pdf', { id:staging.id }) }}" target="_blank"><i class="fas fa-file-pdf fa-2x"></i></a>
+                        <a title="{{staging.name}}" href="{{ path('staging-pdf', { id:staging.id }) }}" target="_blank"><i class="fas fa-file-pdf fa-2x"></i></a>
                     </td>
                     <td class="text-center">{{ staging.name }}</td>
                 <td class="text-center" data-sort="{{ staging.date|date("Ymd") }}">{{ staging.date|date("d/m/Y") }}</td>
                 <td class="text-center" data-sort="{{ staging.modificationDate|date("Ymd") }}">{{ staging.modificationDate|date("d/m/Y") }}</td>
                 <td class="text-center">{{ staging.user.email ?? 'owner' }}</td>
+                <td class="text-center">
+                 {% if staging.lanFilePath %}
+                    <a title="{{staging.lanFilePath}}" href="{{ asset('uploads/files/' ~ staging.lanFilePath) }}" target="_blank"><i class="fas fa-file-alt fa-2x"></i></a>
+                 {% endif %}
+                </td>
+                <td class="text-center">
+                 {% if staging.standardFilePath %}
+                    <a title="{{staging.standardFilePath}}" href="{{ asset('uploads/files/' ~ staging.standardFilePath) }}" target="_blank"><i class="fas fa-file-alt fa-2x"></i></a>
+                 {% endif %}
+                </td>
                     <td>
                         <a href="{{ path('staging-update', { id:staging.id, token:mon_token }) }}"
                             class="btn btn-warning btn-block">Configurer</a>

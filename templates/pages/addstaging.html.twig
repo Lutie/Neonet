@@ -4,15 +4,18 @@
 
     <h1> {{ task }} un staging </h1>
 
-    <legend class="mb-4"></legend>
+    <legend class="mb-5"></legend>
 
     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
-    <button type="submit" class="btn btn-primary offset-5 col-2 mb-4">{{ task }}</button>
 
     <div class="row">
         <div class="col-6"> {{ form_row(form.name) }} </div>
         <div class="col-3"> {{ form_row(form.nasId) }} </div>
+        <div class="col-3"> {{ form_row(form.license_nasId) }} </div>
     </div>
+
+    <div class="divider"></div>
+    <h2>Contact</h2>
     <div class="row">
         <div class="col-3"> {{ form_row(form.contact_name) }} </div>
         <div class="col-3"> {{ form_row(form.contact_phone) }} </div>
@@ -22,10 +25,13 @@
         <div class="col-3"> {{ form_row(form.contact_city) }} </div>
         <div class="col-6"> {{ form_row(form.contact_address) }} </div>
     </div>
+
+    <div class="divider"></div>
     <div class="row">
         <div class="col-3"> {{ form_row(form.delivery_date) }} </div>
-        <div class="col-3"> {{ form_row(form.hoist_standard) }} </div>
         <div class="col-3"> {{ form_row(form.staging_type) }} </div>
+        <div class="col-3"> {{ form_row(form.hoist_standard) }} </div>
+        <div class="col-3"> {{ form_row(form.standard_file_upload) }} </div>
     </div>
 
     {# "TV" required #}
@@ -69,10 +75,10 @@
         </div>
     </div>
     
-    {# "Wifi" and "Chromcast" required #}
+    {# "Wifi" and "Chromecast" required #}
     <div class="staging-block" data-requirements='["2","3"]'>
         <div class="divider"></div>
-        <h2>Wifi & Chromcast</h2>
+        <h2>Wifi & Chromecast</h2>
         <div class="row">
             <div class="col-3"> {{ form_row(form.vlan_wifi) }} </div>
             <div class="col-3"> {{ form_row(form.guest_ip) }} </div>
@@ -101,6 +107,10 @@
     </div>
 
     <div class="divider"></div>
+
+    {{ form_row(form.description) }}
+
+    <button type="submit" class="btn btn-primary offset-5 col-2 mb-4">{{ task }}</button>
 
     {{ form_end(form) }}
 
