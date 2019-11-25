@@ -1,4 +1,5 @@
 /var/
 /vendor/
 /.idea/
+/web/uploads/files/
 .env
