@@ -91,6 +91,7 @@ class StagingController extends AbstractController
 
         return $this->render('pages/addstaging.html.twig', [
             'form' => $form->createView(),
+            'staging' => $staging,
             'task' => 'Ajouter'
         ]);
     }
@@ -141,6 +142,7 @@ class StagingController extends AbstractController
 
         return $this->render('pages/addstaging.html.twig', [
             'form' => $form->createView(),
+            'staging' => $staging,
             'task' => 'Modifier'
         ]);
     }

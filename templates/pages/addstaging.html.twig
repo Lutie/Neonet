@@ -31,11 +31,24 @@
         <div class="col-3"> {{ form_row(form.delivery_date) }} </div>
         <div class="col-3"> {{ form_row(form.staging_type) }} </div>
         <div class="col-3"> {{ form_row(form.hoist_standard) }} </div>
-        <div class="col-3"> {{ form_row(form.standard_file_upload) }} </div>
+        <div id="standard_file_upload" class="col-3">
+            <div>{{ form_row(form.standard_file_upload) }} </div>
+            <div id="standard_file_icon" class="hidden">
+                <i id="standard_file_clear" class="clear-button fas fa-window-close"></i>
+                <i class="fas fa-file-alt fa-2x"></i>
+                <span id="standard_file_name"></span>
+            </div>
+            {% if staging.standardFilePath %}
+            <div id="standard_file_path">
+                <i class="fas fa-file-alt fa-2x"></i>
+                <span>{{ staging.standardFilePath }}</span>
+            </div>
+            {% endif %}
+        </div>
     </div>
 
     {# "TV" required #}
-    <div class="staging-block" data-requirements='["1"]'>
+    <div class="staging-block" data-requirements='["1"]' data-exceptions='[]'>
         <div class="divider"></div>
         <h2>TV</h2>
         <div class="row">
@@ -51,7 +64,7 @@
     </div>
 
     {# "Radio" required #}
-    <div class="staging-block" data-requirements='["6"]'>
+    <div class="staging-block" data-requirements='["6"]' data-exceptions='[]'>
         <div class="divider"></div>
         <h2>Radio</h2>
         <div class="row">
@@ -60,14 +73,14 @@
     </div>
     
     {# "Wifi" required #}
-    <div class="staging-block" data-requirements='["2"]'>
+    <div class="staging-block" data-requirements='["2"]' data-exceptions='[]'>
         <div class="divider"></div>
         <h2>Wifi</h2>
         <p>N'oubliez pas de créer la rate card !</p>
     </div>
     
     {# "Wifi" and "TV" required #}
-    <div class="staging-block" data-requirements='["1","2"]'>
+    <div class="staging-block" data-requirements='["1","2"]' data-exceptions='[]'>
         <div class="divider"></div>
         <h2>Wifi & TV</h2>
         <div class="row">
@@ -75,8 +88,8 @@
         </div>
     </div>
     
-    {# "Wifi" and "Chromecast" required #}
-    <div class="staging-block" data-requirements='["2","3"]'>
+    {# "Wifi" and not "Chromecast" required #}
+    <div class="staging-block" data-requirements='["2"]' data-exceptions='["3"]'>
         <div class="divider"></div>
         <h2>Wifi & Chromecast</h2>
         <div class="row">
@@ -88,16 +101,31 @@
     </div>
     
     {# "Lan" required #}
-    <div class="staging-block" data-requirements='["4"]'>
+    <div class="staging-block" data-requirements='["4"]' data-exceptions='[]'>
         <div class="divider"></div>
         <h2>Lan</h2>
+        <p>Fournir (via fichier texte ou sheet) tous les services, plan d\'adressage, VLAN, DHCP, qui doivent être configurés :</p>
         <div class="row">
-            <div class="col-12"> {{ form_row(form.lan_file_upload) }} </div>
+            <div id="lan_file_upload" class="col-3">
+                <div>{{ form_row(form.lan_file_upload) }} </div>
+                <span id="lan_file_icon" class="hidden">
+                    <i id="lan_file_clear" class="clear-button fas fa-window-close"></i>
+                    <i class="fas fa-file-alt fa-2x"></i>
+                    <span id="lan_file_name"></span>
+                </span>
+                {% if staging.lanFilePath %}Le fichier précédent sera remplacé !{% endif %}
+            {% if staging.lanFilePath %}
+                <div id="lan_file_path">
+                    <i class="fas fa-file-alt fa-2x"></i>
+                    <span>{{ staging.lanFilePath }}</span>
+                </div>
+            {% endif %}
+            </div>
         </div>
     </div>
     
     {# "Switch" required #}
-    <div class="staging-block" data-requirements='["5"]'>
+    <div class="staging-block" data-requirements='["5"]' data-exceptions='[]'>
         <div class="divider"></div>
         <h2>Switch</h2>
         <div class="row">

@@ -4,6 +4,8 @@ a.nav-link:hover { color: #565656; }
 a.nav-link:active { color: #868686; }
 
 .hidden { display: none; }
+.clear-button { color: red; cursor: pointer; }
+.warning-text { color: red; font-size: 10px; }
 .replace-me { width : 90%; margin-left: 10%; }
 .fa-sm { size: 10px; }
 
