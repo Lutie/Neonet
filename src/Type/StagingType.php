@@ -163,10 +163,10 @@ class StagingType extends AbstractType
             ->add('trader', ChoiceType::class, [
                 'label' => 'Type de switch',
                 'choices'  => [
-                    'hp'  => '',
-                    'sisco'  => '',
-                    'alcatel'  => '',
-                    'brocad'  => '',
+                    'Hp'  => 'Hp',
+                    'Sisco'  => 'Sisco',
+                    'Alcatel'  => 'Alcatel',
+                    'Brocad'  => 'Brocad',
                 ],
             ])
             ->add('description', TextareaType::class, [

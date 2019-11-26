@@ -66,9 +66,13 @@ $(document).ready(function () {
         });
         $('.staging-block').each(function() {
             requirements = $(this).data('requirements')
+            exceptions = $(this).data('exceptions')
             toggle = true
             for (i = 0; i < requirements.length; i++) {
                 if (!optionsStates.includes(requirements[i])) toggle = false;
+            }
+            for (i = 0; i < exceptions.length; i++) {
+                if (optionsStates.includes(exceptions[i])) toggle = false;
             }
             toggle ? $(this).slideDown() : $(this).slideUp()
         });
