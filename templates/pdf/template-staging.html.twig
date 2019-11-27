@@ -11,115 +11,105 @@
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
-    {# Pdf Style #}
-    <link rel="stylesheet" type="text/css"
-          href="{{ asset('css/pdf-style.css') }}">
-
     <title>Staging</title>
+
+    <style>
+        body { font-size: 12px; font-weight: 400; }
+        strong { font-weight: 700; }
+        th, p  { margin-bottom: 2px; margin-top: 2px; padding-bottom: 2px; padding-top: 2px; }
+    </style>
 
 </head>
 <body>
-    <h2> Fiche de préparation de staging </h2>
-    <legend class="mb-4"></legend>
-    <div class="container">
-        <div class="row">
-            <div class="col-6"> 
-                <p><strong>Nom</strong></p>
-                <p>{{staging.name}}</p>
-            </div>
-            <div class="col-3"> 
+
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th colspan="3">
+                <span style="font-size: 18px">Fiche de Staging - <strong>{{ staging.name }}</strong></span>
+            </th>
+            <th>
+                <img src="{{ nncLogoUrl }}" style="width: 100px;">
+            </th>
+        </tr>
+        <tr>
+            <th>
                 <p><strong>NASID</strong></p>
                 <p>{{staging.nasId}}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-3"> 
+            </th>
+            <th>
                 <p><strong>Date de livraison</strong></p>
                 <p>{{staging.deliveryDate ? staging.deliveryDate|date("d/m/Y") : "non renseigné"}}</p>
-            </div>
-            <div class="col-3"> 
+            </th>
+            <th>
                 <p><strong>Type de Staging</strong></p>
                 <p>{% for type in staging.stagingType %}
                 {{type == 1 ? "TV" : type == 2 ? "Wifi" : type == 3 ? "Chromecast" : type == 4 ? "Lan" : type == 5 ? "Switch" :type == 6 ? "Radio" : ""}}{{loop.last ? "" : ","}}{% endfor %}</p>
-            </div>
-            <div class="col-3"> 
+            </th>
+            <th>
                 <p><strong>Standards Hoist</strong></p>
                 <p>{{staging.hoistStandard ? "Respectés" : "Non respectés"}}</p>
-            </div>
-            <div class="col-3">
-                {% if staging.standardFilePath %}
-                    <div id="standard_file_path">
-                        <i class="fas fa-file-alt fa-2x"></i>
-                        <span>{{ staging.standardFilePath }}</span>
-                    </div>
+                {% if not staging.hoistStandard %}
+                    <p>(Standard fournis pièce jointe)</p>
                 {% endif %}
-            </div>
-        </div>
-        <div class="divider"></div>
-        <h2>Contact</h2>
-        <div class="row">
-            <div class="col-3"> 
-                <p><strong>Nom</strong></p>
-                <p>{{staging.contactName ?? "non renseigné"}}</p>
-            </div>
-            <div class="col-3"> 
-                <p><strong>N° de tél</strong></p>
-                <p>{{staging.contactPhone ?? "non renseigné"}}</p>
-            </div>
-            <div class="col-3"> 
-                <p><strong>Code postal</strong></p>
-                <p>{{staging.contactZipcode ?? "non renseigné"}}</p>
-            </div>
-            <div class="col-3"> 
-                <p><strong>Ville</strong></p>
-                <p>{{staging.contactCity ?? "non renseigné"}}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6"> 
-                <p><strong>Adresse</strong></p>
-                <p>{{staging.contactAddress ?? "non renseigné"}}</p>
-            </div>
-        </div>
-        {# "TV" required #}
-        {% if 1 in staging.stagingType %}
-            <div class="divider"></div>
-            <h2>TV</h2>
-            <div class="row">
-                <div class="col-3">
-                    <p><strong>Streamer ?</strong></p>
-                    <p>{{ staging.streamer ? 'Oui' : 'Non' }}</p>
-                </div>
-                <div class="col-3">
-                    <p><strong>VOD ?</strong></p>
-                    <p>{{ staging.vod ? 'Oui' : 'Non' }}</p>
-                </div>
-                <div class="col-3">
-                    <p><strong>Marque(s) TV</strong></p>
-                    <p>{% for brand in staging.tvBrand %}{{ brand }}{{loop.last ? "" : ","}}{% endfor %}</p>
-                </div>
-                <div class="col-12">
-                    <p><strong>Plan chaines TV</strong></p>
-                    <p>{{ staging.tvChannelPlan }}</p>
-                </div>
-                <div class="col-12">
-                    <p><strong>Liste des chambres</strong></p>
-                    <p>{{ staging.roomList }}</p>
-                </div>
-                <div class="col-3">
-                    <p><strong>Type de Gui</strong></p>
-                    <p>{{ staging.guiType }}</p>
-                </div>
-                <div class="col-3">
-                    <p><strong>Type de borne</strong></p>
-                    <p>{{ staging.headBrand }}</p>
-                </div>
-                <div class="col-3">
-                    <p><strong>Contrôleur de zone</strong></p>
-                    <p>{{ staging.controllerBrand }}</p>
-                </div>
-            </div>
-        {% endif %}
+            </th>
+        </tr>
+    </table>
+
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Contact</th>
+            <th colspan="3">
+                <p><strong>Nom</strong> : {{staging.contactName ?? "non renseigné"}} ({{staging.contactPhone ?? "téléphone non renseigné"}})</p>
+                <p>{{staging.contactZipcode ?? "(Code Postal non renseigné)"}} - {{staging.contactCity ?? "(Ville non renseigné)"}} : {{staging.contactAddress ?? "(Adresse non renseignée)"}}</p>
+            </th>
+        </tr>
+    </table>
+
+    {# "TV" required #}
+    {% if 1 in staging.stagingType %}
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th colspan="4">TV</th>
+            </tr>
+            <tr>
+                <th>
+                    <p><strong>Streamer</strong> : {{ staging.streamer ? 'Oui' : 'Non' }}</p>
+                </th>
+                <th>
+                    <p><strong>VOD</strong> : {{ staging.vod ? 'Oui' : 'Non' }}</p>
+                </th>
+                <th colspan="2">
+                    <p><strong>Marque(s) TV</strong> : {% for brand in staging.tvBrand %}{{ brand }}{{loop.last ? "" : ", "}}{% endfor %}</p>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="4">
+                    <p><strong>Plan chaines TV</strong> : {{ staging.tvChannelPlan }}</p>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="4">
+                    <p><strong>Liste des chambres</strong> : {{ staging.roomList }}</p>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <p><strong>Type de Gui</strong> : {{ staging.guiType }}</p>
+                </th>
+                <th>
+                    <p><strong>Type de borne</strong> : {{ staging.headBrand }}</p>
+                </th>
+                <th>
+                    <p><strong>Contrôleur de zone</strong> : {{ staging.controllerBrand }}</p>
+                </th>
+                <th>
+                </th>
+            </tr>
+        </table>
+    {% endif %}
+
+
+    {% if 999 in staging.stagingType %}
         {# "Radio" required #}
         {% if 6 in staging.stagingType %}
             <div class="divider"></div>
@@ -206,5 +196,6 @@
         <h2>Description</h2>
         <p>{{staging.description}}</p>
         <div class="divider"></div>
-    </div>
+    {% endif %}
+
 </body>
