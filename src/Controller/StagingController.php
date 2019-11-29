@@ -2,6 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Bill;
+use App\Entity\Item;
+use App\Entity\Service;
+use App\Type\BillType;
+
 use App\Entity\Staging;
 use App\Entity\User;
 use App\Type\StagingType;
@@ -91,6 +96,7 @@ class StagingController extends AbstractController
 
         return $this->render('pages/addstaging.html.twig', [
             'form' => $form->createView(),
+            'staging' => $staging,
             'task' => 'Ajouter'
         ]);
     }
@@ -141,6 +147,7 @@ class StagingController extends AbstractController
 
         return $this->render('pages/addstaging.html.twig', [
             'form' => $form->createView(),
+            'staging' => $staging,
             'task' => 'Modifier'
         ]);
     }
@@ -161,12 +168,11 @@ class StagingController extends AbstractController
         $this->generatePdf($staging);
     }
 
-    function generatePdf(Staging $staging = null) {
-        $staging = $staging ?? $this->fakeStaging();
-
-        // Retrieve the HTML generated in our twig file
+    function generatePdf(Staging $staging) {
         $html = $this->renderView('pdf/template-staging.html.twig', [
             'staging' => $staging,
+            'nncLogoUrl' => getenv('NNC_LOGO_URL'),
+            'partnerLogoUrl' => getenv('PARTNER_LOGO_URL'),
         ]);
 
         $pdfRender = new PdfRender;

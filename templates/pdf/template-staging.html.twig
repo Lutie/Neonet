@@ -11,69 +11,197 @@
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
-    {# Pdf Style #}
-    <link rel="stylesheet" type="text/css"
-          href="{{ asset('css/pdf-style.css') }}">
-
     <title>Staging</title>
+
+    <style>
+        body { font-size: 12px; font-weight: 400; }
+        strong { font-weight: 700; }
+        th, p  { margin-bottom: 2px; margin-top: 2px; padding-bottom: 2px; padding-top: 2px; }
+    </style>
 
 </head>
 <body>
-    <h2> Fiche de préparation de staging </h2>
-    <legend class="mb-4"></legend>
-    <div class="row">
-        <div class="col-6"> 
-            <p><strong>Nom</strong></p>
-            <p>{{staging.name}}</p>
-        </div>
-        <div class="col-3"> 
-            <p><strong>NASID</strong></p>
-            <p>{{staging.nasId}}</p>
-        </div>
-    </div>
-    <div class="divider"></div>
-    <div class="row">
-        <div class="col-3"> 
-            <p><strong>Nom du contact</strong></p>
-            <p>{{staging.contactName ?? "non renseigné"}}</p>
-        </div>
-        <div class="col-3"> 
-            <p><strong>N° de tél du contact</strong></p>
-            <p>{{staging.contactPhone ?? "non renseigné"}}</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-3"> 
-            <p><strong>Zipcode du contact</strong></p>
-            <p>{{staging.contactZipcode ?? "non renseigné"}}</p>
-        </div>
-        <div class="col-3"> 
-            <p><strong>Ville du contact</strong></p>
-            <p>{{staging.contactCity ?? "non renseigné"}}</p>
-        </div>
-        <div class="col-6"> 
-            <p><strong>Addresse du contact</strong></p>
-            <p>{{staging.contactAddress ?? "non renseigné"}}</p>
-        </div>
-    </div>
-    <div class="divider"></div>
-    <div class="row">
-        <div class="col-3"> 
-            <p><strong>Date de livraison</strong></p>
-            <p>{{staging.deliveryDate ? staging.deliveryDate|date("d/m/Y") : "non renseigné"}}</p>
-        </div>
-        <div class="col-3"> 
-            <p><strong>Standards Hoist</strong></p>
-            <p>{{staging.hoistStandard ? "Respectés" : "Non respectés"}}</p>
-        </div>
-        <div class="col-3"> 
-            <p><strong>Type de Staging</strong></p>
-            <p>{% for type in staging.stagingType %}
-            {{type == 1 ? "TV" : type == 2 ? "Wifi" : type == 3 ? "Chromcast" : type == 4 ? "Lan" : type == 5 ? "Switch" :type == 6 ? "Radio" : ""}}{{loop.last ? "" : ","}}{% endfor %}</p>
-        </div>
-    </div>
 
-    <p>{{staging.description}}</p>
-    <div class="divider"></div>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th colspan="3">
+                <span style="font-size: 18px">Fiche de Staging - <strong>{{ staging.name }}</strong></span>
+            </th>
+            <th>
+                <img src="{{ nncLogoUrl }}" style="width: 100px;">
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <p><strong>NASID</strong></p>
+                <p>{{staging.nasId}}</p>
+            </th>
+            <th>
+                <p><strong>Date de livraison</strong></p>
+                <p>{{staging.deliveryDate ? staging.deliveryDate|date("d/m/Y") : "non renseigné"}}</p>
+            </th>
+            <th>
+                <p><strong>Type de Staging</strong></p>
+                <p>{% for type in staging.stagingType %}
+                {{type == 1 ? "TV" : type == 2 ? "Wifi" : type == 3 ? "Chromecast" : type == 4 ? "Lan" : type == 5 ? "Switch" :type == 6 ? "Radio" : ""}}{{loop.last ? "" : ","}}{% endfor %}</p>
+            </th>
+            <th>
+                <p><strong>Standards Hoist</strong></p>
+                <p>{{staging.hoistStandard ? "Respectés" : "Non respectés"}}</p>
+                {% if not staging.hoistStandard %}
+                    <p>(Standard fournis pièce jointe)</p>
+                {% endif %}
+            </th>
+        </tr>
+    </table>
 
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Contact</th>
+            <th colspan="3">
+                <p><strong>Nom</strong> : {{staging.contactName ?? "non renseigné"}} ({{staging.contactPhone ?? "téléphone non renseigné"}})</p>
+                <p>{{staging.contactZipcode ?? "(Code Postal non renseigné)"}} - {{staging.contactCity ?? "(Ville non renseigné)"}} : {{staging.contactAddress ?? "(Adresse non renseignée)"}}</p>
+            </th>
+        </tr>
+    </table>
+
+    {# "TV" required #}
+    {% if 1 in staging.stagingType %}
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th colspan="4">TV</th>
+            </tr>
+            <tr>
+                <th>
+                    <p><strong>Streamer</strong> : {{ staging.streamer ? 'Oui' : 'Non' }}</p>
+                </th>
+                <th>
+                    <p><strong>VOD</strong> : {{ staging.vod ? 'Oui' : 'Non' }}</p>
+                </th>
+                <th colspan="2">
+                    <p><strong>Marque(s) TV</strong> : {% for brand in staging.tvBrand %}{{ brand }}{{loop.last ? "" : ", "}}{% endfor %}</p>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="4">
+                    <p><strong>Plan chaines TV</strong> : {{ staging.tvChannelPlan }}</p>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="4">
+                    <p><strong>Liste des chambres</strong> : {{ staging.roomList }}</p>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <p><strong>Type de Gui</strong> : {{ staging.guiType }}</p>
+                </th>
+                <th>
+                    <p><strong>Type de borne</strong> : {{ staging.headBrand }}</p>
+                </th>
+                <th>
+                    <p><strong>Contrôleur de zone</strong> : {{ staging.controllerBrand }}</p>
+                </th>
+                <th>
+                </th>
+            </tr>
+        </table>
+    {% endif %}
+
+    {# "Radio" required #}
+    {% if 6 in staging.stagingType %}
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th colspan="4">Radio</th>
+            </tr>
+            <tr>
+                <th colspan="4">
+                    <p><strong>Plan radios</strong> : {{ staging.radioChannelPlan }}</p>
+                </th>
+            </tr>
+        </table>
+    {% endif %}
+
+    {# "Wifi" required #}
+    {% if 6 in staging.stagingType %}
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th colspan="4">Wifi</th>
+            </tr>
+            <tr>
+                <th>
+                    <p>N'oubliez pas de créer la rate card !</p>
+                </th>
+                {# "Wifi" and "TV" required #}
+                {% if 1 in staging.stagingType and 2 in staging.stagingType %}
+                    <th>
+                        <p>TV sur le Wifi ? {{ staging.tvOnWifi ? 'Oui' : 'Non' }}</p>
+                    </th>
+                {% else %}<th></th>{% endif %}
+                <th colspan="2"></th>
+            </tr>
+            {# "Wifi" and not "Chromecast" required #}
+            {% if 2 in staging.stagingType and 3 not in staging.stagingType %}
+                <tr>
+                    <th>
+                        <p><strong>Vlan Wifi</strong> : {{ staging.vlanWifi }}</p>
+                    </th>
+                    <th>
+                        <p><strong>Guest IP</strong> : {{ staging.guestIp }}</p>
+                    </th>
+                    <th>
+                        <p><strong>SSID VLAN</strong> : {{ staging.ssidVlan }}</p>
+                    </th>
+                    <th>
+                        <p><strong>SSID Wifi</strong> : {{ staging.ssidWifi }}</p>
+                    </th>
+                </tr>
+            {% endif %}
+        </table>
+    {% endif %}
+
+    {# "Lan" required #}
+    {% if 4 in staging.stagingType %}
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th colspan="4">Lan</th>
+            </tr>
+            <tr>
+                <th colspan="4">
+                    <p>Informations des services, plan d'adressage, VLAN, DHCP fournis en pièce jointe</p>
+                </th>
+            </tr>
+        </table>
+    {% endif %}
+
+    {# "Switch" required #}
+    {% if 1 in staging.stagingType %}
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th colspan="4">Switch</th>
+            </tr>
+            <tr>
+                <th>
+                    <p><strong>Quantité de switch</strong> : {{ staging.switchQuantity }}</p>
+                </th>
+                <th>
+                    <p><strong>Type de switch</strong> : {{ staging.trader }}</p>
+                </th>
+                <th colspan="2"></th>
+            </tr>
+        </table>
+    {% endif %}
+
+    {% if staging.description %}
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th colspan="4">Description</th>
+            </tr>
+            <tr>
+                <th colspan="4">
+                    <p>{{staging.description}}</p>
+                </th>
+            </tr>
+        </table>
+    {% endif %}
 </body>

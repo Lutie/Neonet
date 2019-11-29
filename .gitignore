@@ -1,5 +1,9 @@
 /var/
 /vendor/
 /.idea/
+<<<<<<< HEAD
 /web/uploads/
+=======
+/web/uploads/files/
+>>>>>>> 4c582b38530abb29b004d5cb0164ce235c50c7ac
 .env

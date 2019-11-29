@@ -11,10 +11,6 @@
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
-    {# Pdf Style #}
-    <link rel="stylesheet" type="text/css"
-          href="{{ asset('css/pdf-style.css') }}">
-
     <title>Devis</title>
 
 </head>
@@ -37,8 +33,6 @@
             <p>(Ce document est édité à titre provisoire)</p>
         </div>
     </div>
-
-    <legend class="mb-4"></legend>
 
     {% for service in datas.services %}
         <table  class="table table-bordered table-striped">

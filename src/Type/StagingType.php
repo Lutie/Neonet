@@ -155,7 +155,7 @@ class StagingType extends AbstractType
                 'label' => 'VLAN SSID Chromecast (ssi Chromecast ET pas de Wifi)',
             ])
             ->add('lan_file_upload', FileType::class, [
-                'label' => 'Fournir tous les services, plan d\'addressage, VLAN, DHCP, qui doivent être configurés',
+                'label' => 'Pièce jointe',
             ])
             ->add('switch_quantity', IntegerType::class, [
                 'label' => 'Quantité de switch',
@@ -163,10 +163,10 @@ class StagingType extends AbstractType
             ->add('trader', ChoiceType::class, [
                 'label' => 'Type de switch',
                 'choices'  => [
-                    'hp'  => '',
-                    'sisco'  => '',
-                    'alcatel'  => '',
-                    'brocad'  => '',
+                    'Hp'  => 'Hp',
+                    'Sisco'  => 'Sisco',
+                    'Alcatel'  => 'Alcatel',
+                    'Brocad'  => 'Brocad',
                 ],
             ])
             ->add('description', TextareaType::class, [
