@@ -3,9 +3,9 @@ $(document).ready(function () {
     // Permet d'afficher l'ajout de fichier pour les standards désirés
     $('#staging_hoist_standard').change(function () {
         if (this.value == 1) {
-            $('#standard_file_upload').slideUp()
-        } else {
             $('#standard_file_upload').slideDown()
+        } else {
+            $('#standard_file_upload').slideUp()
         }
     });
 

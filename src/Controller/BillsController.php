@@ -316,7 +316,7 @@ class BillsController extends AbstractController
         ]);
 
         $pdfRender = new PdfRender;
-        $pdfRender->generatePdf($html, $bill->getName());
+        $pdfRender->generatePdf($html, "Devis " . $bill->getId() . " " . $bill->getName());
     }
 
     function fakeBill() {

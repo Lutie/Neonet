@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use DateTime;
 
 /**
- * //@Security("has_role('ROLE_SUPER_ADMIN')")
+ * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
 class StagingController extends AbstractController
 {

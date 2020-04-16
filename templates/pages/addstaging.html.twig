@@ -39,10 +39,10 @@
                 <span id="standard_file_name"></span>
             </div>
             {% if staging.standardFilePath %}
-            <div id="standard_file_path">
-                <i class="fas fa-file-alt fa-2x"></i>
-                <span>{{ staging.standardFilePath }}</span>
-            </div>
+                <div id="standard_file_path">
+                    <i class="fas fa-file-alt fa-2x"></i>
+                    <span>{{ staging.standardFilePath }}</span>
+                </div>
             {% endif %}
         </div>
     </div>
@@ -58,8 +58,6 @@
             <div class="col-12"> {{ form_row(form.tv_channel_plan) }} </div>
             <div class="col-12"> {{ form_row(form.room_list) }} </div>
             <div class="col-3"> {{ form_row(form.gui_type) }} </div>
-            <div class="col-3"> {{ form_row(form.head_brand) }} </div>
-            <div class="col-3"> {{ form_row(form.controller_brand) }} </div>
         </div>
     </div>
 
@@ -77,6 +75,10 @@
         <div class="divider"></div>
         <h2>Wifi</h2>
         <p>N'oubliez pas de créer la rate card !</p>
+        <div class="row">
+            <div class="col-3"> {{ form_row(form.head_brand) }} </div>
+            <div class="col-3"> {{ form_row(form.controller_brand) }} </div>
+        </div>
     </div>
     
     {# "Wifi" and "TV" required #}
@@ -88,10 +90,10 @@
         </div>
     </div>
     
-    {# "Wifi" and not "Chromecast" required #}
-    <div class="staging-block" data-requirements='["2"]' data-exceptions='["3"]'>
+    {# "Chromecast" and not "Wifi" required #}
+    <div class="staging-block" data-requirements='["3"]' data-exceptions='["2"]'>
         <div class="divider"></div>
-        <h2>Wifi (& pas Chromecast)</h2>
+        <h2>Chromecast (& pas Wifi)</h2>
         <div class="row">
             <div class="col-3"> {{ form_row(form.vlan_wifi) }} </div>
             <div class="col-3"> {{ form_row(form.guest_ip) }} </div>

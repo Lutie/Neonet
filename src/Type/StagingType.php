@@ -23,7 +23,7 @@ class StagingType extends AbstractType
                 'label' => 'NASID (*)',
             ])
             ->add('license_nasId', ChoiceType::class, [
-                'label' => 'Licenses commandées ? (*)',
+                'label' => 'Licenses commandées ? (*) Ordering tools',
                 'empty_data' => false,
                 'choices'  => [
                     'Non' => false,
@@ -74,7 +74,7 @@ class StagingType extends AbstractType
                 ],
             ])
             ->add('streamer', ChoiceType::class, [
-                'label' => 'Streamer',
+                'label' => 'Streamer (Anevia...)',
                 'empty_data' => false,
                 'choices'  => [
                     'Non' => false,
@@ -93,7 +93,7 @@ class StagingType extends AbstractType
                 'label' => 'Plan des chaines TV',
             ])
             ->add('room_list', TextareaType::class, [
-                'label' => 'Liste des chambres',
+                'label' => 'Liste des chambres (101,102,...)',
             ])
             ->add('tv_brand', ChoiceType::class, [
                 'label' => 'Marque(s) des TVs',
@@ -114,7 +114,7 @@ class StagingType extends AbstractType
                 ],
             ])
             ->add('head_brand', ChoiceType::class, [
-                'label' => 'Type de borne',
+                'label' => 'Type de bornes',
                 'choices'  => [
                     'ruckus' => 'ruckus',
                     'alcatel' => 'alcatel',
@@ -122,7 +122,7 @@ class StagingType extends AbstractType
                 ],
             ])
             ->add('controller_brand', ChoiceType::class, [
-                'label' => 'Contrôleur de zone',
+                'label' => 'Contrôleur de bornes',
                 'choices'  => [
                     'aucun' => 'aucun',
                     'zonedirector' => 'zonedirector',
@@ -143,16 +143,16 @@ class StagingType extends AbstractType
                 ],
             ])
             ->add('ssid_wifi', TextType::class, [
-                'label' => 'Guest SSID (ssi Chromecast ET pas de Wifi)',
+                'label' => 'Guest SSID',
             ])
             ->add('vlan_wifi', TextType::class, [
-                'label' => 'VLAN wifi guest (ssi Chromecast ET pas de Wifi)',
+                'label' => 'VLAN wifi guest',
             ])
             ->add('guest_ip', TextType::class, [
-                'label' => 'Address ip wifi guest (ssi Chromecast ET pas de Wifi)',
+                'label' => 'Address ip wifi guest',
             ])
             ->add('ssid_vlan', TextType::class, [
-                'label' => 'VLAN SSID Chromecast (ssi Chromecast ET pas de Wifi)',
+                'label' => 'VLAN SSID Chromecast',
             ])
             ->add('lan_file_upload', FileType::class, [
                 'label' => 'Pièce jointe',
@@ -164,9 +164,9 @@ class StagingType extends AbstractType
                 'label' => 'Type de switch',
                 'choices'  => [
                     'Hp'  => 'Hp',
-                    'Sisco'  => 'Sisco',
+                    'Cisco'  => 'Cisco',
                     'Alcatel'  => 'Alcatel',
-                    'Brocad'  => 'Brocad',
+                    'Ruckus (Brocade)'  => 'Ruckus (Brocade)',
                 ],
             ])
             ->add('description', TextareaType::class, [

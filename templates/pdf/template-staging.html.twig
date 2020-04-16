@@ -43,7 +43,7 @@
             <th>
                 <p><strong>Type de Staging</strong></p>
                 <p>{% for type in staging.stagingType %}
-                {{type == 1 ? "TV" : type == 2 ? "Wifi" : type == 3 ? "Chromecast" : type == 4 ? "Lan" : type == 5 ? "Switch" :type == 6 ? "Radio" : ""}}{{loop.last ? "" : ","}}{% endfor %}</p>
+                {{type == 1 ? "TV" : type == 2 ? "Wifi" : type == 3 ? "Chromecast" : type == 4 ? "Lan" : type == 5 ? "Switch" : type == 6 ? "Radio" : ""}}{{loop.last ? "" : ","}}{% endfor %}</p>
             </th>
             <th>
                 <p><strong>Standards Hoist</strong></p>
@@ -96,67 +96,59 @@
                 <th>
                     <p><strong>Type de Gui</strong> : {{ staging.guiType }}</p>
                 </th>
-                <th>
-                    <p><strong>Type de borne</strong> : {{ staging.headBrand }}</p>
-                </th>
-                <th>
-                    <p><strong>Contrôleur de zone</strong> : {{ staging.controllerBrand }}</p>
-                </th>
-                <th>
-                </th>
-            </tr>
-        </table>
-    {% endif %}
-
-    {# "Radio" required #}
-    {% if 6 in staging.stagingType %}
-        <table class="table table-bordered table-striped">
-            <tr>
-                <th colspan="4">Radio</th>
-            </tr>
-            <tr>
-                <th colspan="4">
-                    <p><strong>Plan radios</strong> : {{ staging.radioChannelPlan }}</p>
-                </th>
             </tr>
         </table>
     {% endif %}
 
     {# "Wifi" required #}
-    {% if 6 in staging.stagingType %}
+    {% if 2 in staging.stagingType %}
         <table class="table table-bordered table-striped">
             <tr>
                 <th colspan="4">Wifi</th>
             </tr>
             <tr>
                 <th>
+                    <p><strong>Type de borne</strong> : {{ staging.headBrand }}</p>
+                </th>
+                <th>
+                    <p><strong>Contrôleur de borne</strong> : {{ staging.controllerBrand }}</p>
+                </th>
+            </tr>
+            <tr>
+                <th>
                     <p>N'oubliez pas de créer la rate card !</p>
                 </th>
                 {# "Wifi" and "TV" required #}
-                {% if 1 in staging.stagingType and 2 in staging.stagingType %}
+                {% if 1 in staging.stagingType %}
                     <th>
                         <p>TV sur le Wifi ? {{ staging.tvOnWifi ? 'Oui' : 'Non' }}</p>
                     </th>
                 {% else %}<th></th>{% endif %}
                 <th colspan="2"></th>
             </tr>
-            {# "Wifi" and not "Chromecast" required #}
-            {% if 2 in staging.stagingType and 3 not in staging.stagingType %}
-                <tr>
-                    <th>
-                        <p><strong>Vlan Wifi</strong> : {{ staging.vlanWifi }}</p>
-                    </th>
-                    <th>
-                        <p><strong>Guest IP</strong> : {{ staging.guestIp }}</p>
-                    </th>
-                    <th>
-                        <p><strong>SSID VLAN</strong> : {{ staging.ssidVlan }}</p>
-                    </th>
-                    <th>
-                        <p><strong>SSID Wifi</strong> : {{ staging.ssidWifi }}</p>
-                    </th>
-                </tr>
-            {% endif %}
+        </table>
+    {% endif %}
+
+    {# "Chromecast" and not "Wifi" required #}
+    {% if 3 in staging.stagingType and 2 not in staging.stagingType %}
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th colspan="4">Chromecast</th>
+            </tr>
+            <tr>
+                <th>
+                    <p><strong>Vlan Wifi</strong> : {{ staging.vlanWifi }}</p>
+                </th>
+                <th>
+                    <p><strong>Guest IP</strong> : {{ staging.guestIp }}</p>
+                </th>
+                <th>
+                    <p><strong>SSID VLAN</strong> : {{ staging.ssidVlan }}</p>
+                </th>
+                <th>
+                    <p><strong>SSID Wifi</strong> : {{ staging.ssidWifi }}</p>
+                </th>
+            </tr>
         </table>
     {% endif %}
 
@@ -175,7 +167,7 @@
     {% endif %}
 
     {# "Switch" required #}
-    {% if 1 in staging.stagingType %}
+    {% if 5 in staging.stagingType %}
         <table class="table table-bordered table-striped">
             <tr>
                 <th colspan="4">Switch</th>
@@ -188,6 +180,20 @@
                     <p><strong>Type de switch</strong> : {{ staging.trader }}</p>
                 </th>
                 <th colspan="2"></th>
+            </tr>
+        </table>
+    {% endif %}
+
+    {# "Radio" required #}
+    {% if 6 in staging.stagingType %}
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th colspan="4">Radio</th>
+            </tr>
+            <tr>
+                <th colspan="4">
+                    <p><strong>Plan radios</strong> : {{ staging.radioChannelPlan }}</p>
+                </th>
             </tr>
         </table>
     {% endif %}
