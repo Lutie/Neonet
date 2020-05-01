@@ -8,12 +8,13 @@ a.nav-link:active { color: #868686; }
 .warning-text { color: red; font-size: 10px; }
 .replace-me { width : 90%; margin-left: 10%; }
 .fa-sm { size: 10px; }
+.nav-link { padding: auto 0;}
 
 legend { width: 100%; border-bottom: #868686 1px solid; }
 
 .divider { height: 1px; background-color: black; width: 50%; margin: 8px 25%; opacity: .2; }
 
-.bg-dark-g { background: linear-gradient(to top, rgba(206,220,231,1) 0%,rgba(78,101,112,0.64) 100%); }
+.bg-dark-g { background: linear-gradient(to top, rgba(206,220,231,1) 0%, rgba(78,101,112,0.64) 100%); }
 .bg-grey-g { background: linear-gradient(to bottom, rgba(206,220,231,1) 0%,rgba(78,101,112,0.64) 100%); }
 .bg-white-g { background-image: linear-gradient(#f1f2f3, #565656); }
 
@@ -22,3 +23,32 @@ legend { width: 100%; border-bottom: #868686 1px solid; }
 .smallest-text { font-size: 12px; }
 .big-text { font-size: 20px; }
 .biggest-text { font-size: 22px; }
+
+.logo {
+    max-width: 200px;
+}
+
+.intro {
+    background: url("../img/intro.jpg");
+    background-size: cover;
+    padding: 50px 0;
+    color: #fff;
+    text-align: center;
+    font-size: 36px;
+    font-weight: 400;
+}
+
+.glow {
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+    from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #40E0D0, 0 0 50px #40E0D0, 0 0 60px #40E0D0, 0 0 70px #40E0D0;
+    }
+    to {
+        text-shadow: 0 0 30px #fff, 0 0 30px #AFEEEE, 0 0 40px #AFEEEE, 0 0 50px #AFEEEE, 0 0 60px #AFEEEE, 0 0 70px #AFEEEE, 0 0 80px #AFEEEE;
+    }
+}

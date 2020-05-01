@@ -7,7 +7,7 @@
 
 <nav id="navbar" class="collapse show">
     {% if is_granted('ROLE_SUPER_ADMIN') %}
-        <ul class="nav nav-tabs nav-fill navbar-grey bg-grey-g d-flex flex-column flex-md-row">
+        <ul class="nav nav-tabs nav-fill navbar-grey bg-white-g d-flex flex-column flex-md-row">
             <li class="nav-item {{ route starts with 'user' ? 'active' }}">
                 <a href="{{ path('users') }}" class="nav-link">
                     <i class="fas fa-users fa-2x"></i> / Liste des utilisateurs</a>

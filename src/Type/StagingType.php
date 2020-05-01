@@ -116,18 +116,18 @@ class StagingType extends AbstractType
             ->add('head_brand', ChoiceType::class, [
                 'label' => 'Type de bornes',
                 'choices'  => [
-                    'ruckus' => 'ruckus',
-                    'alcatel' => 'alcatel',
-                    'aruba' => 'aruba',
+                    'ruckus' => 'Ruckus',
+                    'alcatel' => 'Alcatel',
+                    'aruba' => 'Aruba',
                 ],
             ])
             ->add('controller_brand', ChoiceType::class, [
                 'label' => 'Contrôleur de bornes',
                 'choices'  => [
                     'aucun' => 'aucun',
-                    'zonedirector' => 'zonedirector',
-                    'smartzone' => 'smartzone',
-                    'virtualsmartzone' => 'virtualsmartzone',
+                    'zonedirector' => 'ZoneDirector',
+                    'smartzone' => 'SmartZone',
+                    'virtualsmartzone' => 'Virtual SmartZone',
                     'autre' => 'autre',
                 ],
             ])

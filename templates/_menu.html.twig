@@ -6,20 +6,24 @@
 </a>
 
 <nav id="menubar" class="collapse show">
-    <ul class="nav nav-tabs nav-fill navbar-dark bg-dark-g d-flex flex-column flex-md-row">
+    <ul class="pt-3 pb-2 pt-md-2 nav nav-fill navbar-dark d-flex flex-column align-items-center flex-md-row">
         <li class="nav-item {{ route starts with 'index' ? 'active' }}">
             <a href="{{ path('index') }}" class="nav-brand">
-                <img alt="logo" src="{{ asset('img/nnc.png') }}" width="20%">
+                <img class="logo" alt="logo" src="{{ asset('img/nnc.png') }}">
             </a>
         </li>
+        {# no need since every thing is on a single page actually...
         <li class="nav-item {{ route ends with 'about' ? 'active' }}">
             <a href="{{ path('about') }}" class="nav-link">
                 <i class="fas fa-building fa-2x"></i> / Notre Entreprise</a>
         </li>
-        <li class="nav-item {{ route ends with 'contact' ? 'active' }}">
-            <a href="{{ path('contact') }}" class="nav-link">
-                <i class="fas fa-clipboard fa-2x"></i> / Nous Contacter</a>
-        </li>
+        #}
+        {# emailing is not really working fine actually...
+            <li class="nav-item {{ route ends with 'contact' ? 'active' }}">
+                <a href="{{ path('contact') }}" class="nav-link">
+                    <i class="fas fa-clipboard fa-2x"></i> / Nous Contacter</a>
+            </li>
+        #}
         <li class="nav-item {{ route == 'login' ? 'active' }}">
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 <a href="{{ path('logout') }}" class="nav-link">
