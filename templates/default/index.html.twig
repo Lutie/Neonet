@@ -2,14 +2,36 @@
 
 {% block body %}
 
-    <h1> Acceuil </h1>
-
     <legend></legend>
-    </br>
-    {% if is_granted('ROLE_USER') %}
-        <p>Bienvenu sur notre plateforme de devis.</p>
-    {% else %}
-        <p>Veuillez vous connecter afin de pouvoir profiter des fonctionnalités du site.</p>
-    {% endif %}
+
+    <div class="row my-5">
+        {% include('_infos-box.html.twig') with {'label': 1} %}
+        {% include('_infos-box.html.twig') with {'label': 2} %}
+    </div>
+    <div class="row my-5">
+        {% include('_infos-box.html.twig') with {'label': 3} %}
+        {% include('_infos-box.html.twig') with {'label': 4} %}
+    </div>
+
+    <div class="row projects">
+        <div class="col-12 offset-md-2 col-md-8 my-4">
+            <div class="infos-title">
+                {{ ['index', 'projects_title'] | getTranslation }}
+            </div>
+            <div class="infos-line"></div>
+            <div class="projects-slide">
+                <div class="projects-text" id="projects-text">
+                    <div class="infos-text">
+                        {{ ['index', 'projects_text'] | getTranslation }}
+                    </div>
+                    <div class="infos-text">
+                        {% for text in ['index', 'projects_list'] | getMultipleTranslation %}
+                            <p class="ml-4">{{ text }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

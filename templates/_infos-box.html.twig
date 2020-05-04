@@ -1,0 +1,14 @@
+<div class="col-12 col-md-6">
+    <div class="infos-pic">
+        <img class="w-100" alt="infos picture" src="{{ asset('img/infos' ~ label ~ '.jpg') }}">
+    </div>
+    <div class="infos-title">
+        {{ ['index', 'infos_title_' ~ label] | getTranslation }}
+    </div>
+    <div class="infos-line"></div>
+    <div class="infos-text">
+        {% for text in ['index', 'infos_text_' ~ label] | getMultipleTranslation %}
+            <p>{{ text }}</p>
+        {% endfor %}
+    </div>
+</div>

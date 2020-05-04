@@ -31,7 +31,7 @@
 
     {% endblock %}
 
-    <title>{% block title %}Gestion de devis{% endblock %}</title>
+    <title>{% block title %}NeoNet Consulting{% endblock %}</title>
 
     {% block javascripts %}
 
@@ -70,9 +70,7 @@
     {% include('_nav.html.twig') %}
 {% endif %}
 
-{% include('_intro.html.twig') %}
-
-<div class="container mt-3">
+<div class="container mt-5">
     {% include('_flash.html.twig') %}
 
     {% block body %}

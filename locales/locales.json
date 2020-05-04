@@ -1,0 +1,42 @@
+{
+  "app": {
+    "index": {
+      "intro": {
+        "fr": "Spécialiste des réseaux et des solutions multimédia"
+      },
+      "infos_title_1": {
+        "fr": "Déploiement de Réseaux Informatiques"
+      },
+      "infos_text_1": {
+        "fr": "Nous vous proposons l’installation, le brassage et la configuration de vos réseaux informatiques en fonction des différents besoin d’intégration de service tiers et de vos exigences. (Fortinet, Aruba, Alcatel, Cisco, Brocade etc…)\nAudit et test de votre réseau.\n"
+      },
+      "infos_title_2": {
+        "fr": "Déploiement de Solutions TV Multimédia"
+      },
+      "infos_text_2": {
+        "fr": "Nous gérons l’ensemble du projet :\n- Pose des aériens (antenne TNT et Paraboles)\n- Câblage et Recette de conformité du réseau (Fibres, Ethernet & Coaxial)\n- Configuration et installation du Réseau et des Serveurs notamment le Streamer pour vos flux Multicast y compris Canal+ et BeIN Sport.\n- Installation de vos équipements TV (LG, Samsung, Philips) et Chromecast ou Apple TV.\n- Personnalisation des Chartes Graphiques et Formation de votre personnel."
+      },
+      "infos_title_3": {
+        "fr": "Déploiement de Solutions Wifi et Internet Filaire"
+      },
+      "infos_text_3": {
+        "fr": "Nous vous proposons le déploiement de vos équipements Wifi (Ruckus, Aruba, Alcatel …) et la Configuration de vos réseaux à destination du publique, de vos invités et/ou de votre personnel aussi bien en 2,4 Ghz qu’en 5 Ghz.\nNous pouvons réaliser avec nos partenaires un audit wifi avant et/ou après l’installation."
+      },
+      "infos_title_4": {
+        "fr": "Déploiement de Solution d’Affichages Dynamiques"
+      },
+      "infos_text_4": {
+        "fr": "Grâce à la solution SmartSign, nous déployons des écrans Samsung et LG pour votre Signalétique et vos Salles de Réunion."
+      },
+      "projects_title": {
+        "fr": "Nos plus beaux déploiements :"
+      },
+      "projects_text": {
+        "fr": "Nous intervenons partout en France auprès de Grands Acteurs de l’hôtellerie ou de la Santé, comme par exemple :"
+      },
+      "projects_list": {
+        "fr": "•\tL’Hôtel du Louvre (Hyatt)\n•\tLe Médipôle Lyon Villeurbanne\n•\tLe Navire Vizzanova (Corsica Linea)\n•\tL’Hôtel du Palais Biarritz\n•\tLe Monte Carlo Beach\n•\tLe Skyline@Leadership University (Airbus, Blagnac)\n•\tLe CHU du Havres\n"
+      }
+    }
+  }
+}

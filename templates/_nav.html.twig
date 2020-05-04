@@ -7,7 +7,7 @@
 
 <nav id="navbar" class="collapse show">
     {% if is_granted('ROLE_SUPER_ADMIN') %}
-        <ul class="nav nav-tabs nav-fill navbar-grey bg-white-g d-flex flex-column flex-md-row">
+        <ul class="nav py-2 nav-fill navbar-grey d-flex flex-column flex-md-row">
             <li class="nav-item {{ route starts with 'user' ? 'active' }}">
                 <a href="{{ path('users') }}" class="nav-link">
                     <i class="fas fa-users fa-2x"></i> / Liste des utilisateurs</a>
@@ -20,24 +20,41 @@
                 <a href="{{ path('items') }}" class="nav-link">
                     <i class="fas fa-sitemap fa-2x"></i> / Liste des options</a>
             </li>
+            <li class="nav-item {{ route starts with 'bill' ? 'active' }}">
+                <a href="{{ path('bills') }}" class="nav-link">
+                    <i class="fas fa-copy fa-2x"></i> / Liste des devis</a>
+            </li>
+            <li class="nav-item {{ route starts with 'bill' ? 'active' }}">
+                <a href="{{ path('bill-create') }}" class="nav-link">
+                    <i class="fas fa-copy fa-2x"></i> / Créer un devis</a>
+            </li>
+            <li class="nav-item {{ route starts with 'staging' ? 'active' }}">
+                <a href="{{ path('stagings') }}" class="nav-link">
+                    <i class="fas fa-copy fa-2x"></i> / Liste des stagings</a>
+            </li>
+            <li class="nav-item {{ route starts with 'staging' ? 'active' }}">
+                <a href="{{ path('staging-create') }}" class="nav-link">
+                    <i class="fas fa-copy fa-2x"></i> / Créer un staging</a>
+            </li>
+        </ul>
+    {% else %}
+        <ul class="nav py-2 nav-fill navbar-grey d-flex flex-column flex-md-row">
+            <li class="nav-item {{ route starts with 'bill' ? 'active' }}">
+                <a href="{{ path('bills') }}" class="nav-link">
+                    <i class="fas fa-copy fa-2x"></i> / Liste des devis</a>
+            </li>
+            <li class="nav-item {{ route starts with 'bill' ? 'active' }}">
+                <a href="{{ path('bill-create') }}" class="nav-link">
+                    <i class="fas fa-copy fa-2x"></i> / Créer un devis</a>
+            </li>
+            <li class="nav-item {{ route starts with 'staging' ? 'active' }}">
+                <a href="{{ path('stagings') }}" class="nav-link">
+                    <i class="fas fa-copy fa-2x"></i> / Liste des stagings</a>
+            </li>
+            <li class="nav-item {{ route starts with 'staging' ? 'active' }}">
+                <a href="{{ path('staging-create') }}" class="nav-link">
+                    <i class="fas fa-copy fa-2x"></i> / Créer un staging</a>
+            </li>
         </ul>
     {% endif %}
-    <ul class="nav py-2 nav-tabs nav-fill navbar-grey bg-grey-g d-flex flex-column flex-md-row">
-        <li class="nav-item {{ route starts with 'bill' ? 'active' }}">
-            <a href="{{ path('bills') }}" class="nav-link">
-                <i class="fas fa-copy fa-2x"></i> / Liste des devis</a>
-        </li>
-        <li class="nav-item {{ route starts with 'bill' ? 'active' }}">
-            <a href="{{ path('bill-create') }}" class="nav-link">
-                <i class="fas fa-copy fa-2x"></i> / Créer un devis</a>
-        </li>
-        <li class="nav-item {{ route starts with 'staging' ? 'active' }}">
-            <a href="{{ path('stagings') }}" class="nav-link">
-                <i class="fas fa-copy fa-2x"></i> / Liste des stagings</a>
-        </li>
-        <li class="nav-item {{ route starts with 'staging' ? 'active' }}">
-            <a href="{{ path('staging-create') }}" class="nav-link">
-                <i class="fas fa-copy fa-2x"></i> / Créer un staging</a>
-        </li>
-    </ul>
 </nav>

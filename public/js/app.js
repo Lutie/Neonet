@@ -1,5 +1,13 @@
 $(document).ready(function () {
 
+    window.addEventListener("scroll", function() {
+        if (document.body.scrollTop > 900 || document.documentElement.scrollTop > 900) {
+            document.getElementById("projects-text").style.display = "block";
+        } else {
+            document.getElementById("projects-text").style.display = "none";
+        }
+    });
+
     // Permet d'afficher l'ajout de fichier pour les standards désirés
     $('#staging_hoist_standard').change(function () {
         if (this.value == 1) {
@@ -159,7 +167,7 @@ $(document).ready(function () {
             document.getElementsByClassName("withPdfIco")[0].hidden = true
             document.getElementsByClassName("withNoPdfText")[0].hidden = false
         }}
-    }
+    };
 
     // we active or desactive submit depending on mandatories parameters
     var assertForm = function(){
@@ -175,7 +183,7 @@ $(document).ready(function () {
             $('#title-hint').show()
             $('#title').addClass("is-invalid")
         }}
-    }
+    };
 
     // this function recalculate all value in the sheet
     var recalc = function(){
@@ -190,7 +198,7 @@ $(document).ready(function () {
             if(service_item.checked) total += parseInt(total_item.text())
         });
         $('#bill_total').val(total)
-    }
+    };
 
     // each time a service is checked or unchecked we change visibility and relcalculate all values
     $('.service-checkbox').change(function() {
@@ -227,17 +235,17 @@ $(document).ready(function () {
     });
 
     // once : recalculate the values, usefull if the bill is loaded from datas
-    recalc()
+    recalc();
 
     // once : change visibility of services, usefull is the bill is loaded from datas
-    changeForm()
+    changeForm();
 
     //
-    assertForm()
+    assertForm();
 
     // once : for staging form, slidedown all items if needed
     $('.staging-block').each(function() {
         $(this).slideUp()
     });
-    stagingForm()
+    stagingForm();
 });
