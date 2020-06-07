@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Security("has_role('ROLE_USER')")
+ * @Security("has_role('ROLE_SUPER_ADMIN')")
  */
 class BillsController extends AbstractController
 {

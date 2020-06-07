@@ -86,7 +86,7 @@ class UsersController extends AbstractController
             Un email a été envoyé à cette adresse avec le mot de passe qui a été généré automatiquement.');
 
             // for dev or/and testing purpose, this return the raw password whenever a user is created
-            if(getenv('APP_DEV')==='dev') {
+            if(getenv('APP_DEV')==='dev' || ($this->get('security.authorization_checker')->isGranted("ROLE_ADMIN"))) {
                 $this->addFlash('warning', 'Mot de passe du compte créé : ' . $RawPassword);
             }
 

@@ -8,6 +8,12 @@ $(document).ready(function () {
         }
     });
 
+    // Permet d'afficher le MDP des utilisateurs (encore encodé en bcrypt à ce stade)
+    $('.show-pwd').click(function () {
+        var text = $(this).data('password')
+        return window.confirm("Voici le mot de passe (bcrypt) de cette personne : \n" + text)
+    });
+
     // Permet d'afficher l'ajout de fichier pour les standards désirés
     $('#staging_hoist_standard').change(function () {
         if (this.value == 1) {

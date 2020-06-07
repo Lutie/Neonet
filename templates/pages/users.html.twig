@@ -14,6 +14,7 @@
                 <td class="col-xs-1 text-center">Email de l'utilisateur</td>
                 <td class="col-xs-1 text-center">Date de création des accés</td>
                 <td class="col-xs-1 text-center">Rôle</td>
+                {# <td class="col-xs-1 text-center"></td> #}
                 <td class="col-xs-1 text-center sorter-false filter-false">
                     <a href="{{ path('user-add') }}"
                        class="btn btn-success btn-block">Ajouter utilisateur</a>
@@ -37,6 +38,11 @@
                             {% if role == 'ROLE_ADMIN' %}Gestionnaire{% endif %}
                         {% endfor %}
                     </td>
+                    {#
+                        <td class="text-center">
+                            <i class="fas fa-key fa-2x show-pwd" data-password="{{user.password}}"></i>
+                        </td>
+                    #}
                     <td>
                         <a href="{{ path('user-delete', { id:user.id, token:mon_token }) }}"
                            class="btn btn-danger btn-block confirmation-required" data-text="L'utilisateur sera définitivement supprimé.">Supprimer</a>

@@ -39,14 +39,16 @@
         </ul>
     {% else %}
         <ul class="nav py-2 nav-fill navbar-grey d-flex flex-column flex-md-row">
-            <li class="nav-item {{ route starts with 'bill' ? 'active' }}">
-                <a href="{{ path('bills') }}" class="nav-link">
-                    <i class="fas fa-copy fa-2x"></i> / Liste des devis</a>
-            </li>
-            <li class="nav-item {{ route starts with 'bill' ? 'active' }}">
-                <a href="{{ path('bill-create') }}" class="nav-link">
-                    <i class="fas fa-copy fa-2x"></i> / Créer un devis</a>
-            </li>
+            {# 
+                <li class="nav-item {{ route starts with 'bill' ? 'active' }}">
+                    <a href="{{ path('bills') }}" class="nav-link">
+                        <i class="fas fa-copy fa-2x"></i> / Liste des devis</a>
+                </li>
+                <li class="nav-item {{ route starts with 'bill' ? 'active' }}">
+                    <a href="{{ path('bill-create') }}" class="nav-link">
+                        <i class="fas fa-copy fa-2x"></i> / Créer un devis</a>
+                </li>
+            #}
             <li class="nav-item {{ route starts with 'staging' ? 'active' }}">
                 <a href="{{ path('stagings') }}" class="nav-link">
                     <i class="fas fa-copy fa-2x"></i> / Liste des stagings</a>

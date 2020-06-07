@@ -82,6 +82,8 @@ legend { width: 70%; border-bottom: #868686 1px solid; margin: 0 auto; }
     }
 }
 
+.page-content { min-height: 480px; }
+
 .footer {
     margin-top: 64px;
     color: white;
