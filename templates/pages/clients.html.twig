@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h1> Liste des clients </h1>
+
+<legend class="mb-4"></legend>
+
+    <div class="table-responsive table-hover">
+        <table id="item-list" class="table table-bordered table-striped">
+
+            <thead>
+                <td class="col-xs-1 text-center">Nom</td>
+                <td class="col-xs-1 text-center">Description</td>
+                <td class="col-xs-1 text-center">Adresse</td>
+                <td class="col-xs-1 text-center">Ville</td>
+                <td class="col-xs-1 text-center sorter-false filter-false"></td>
+                <td class="col-xs-1 text-center sorter-false filter-false">
+                    <a href="{{ path('client-create') }}"
+                       class="btn btn-success btn-block">Ajouter un client</a>
+                </td>
+            </thead>
+
+            <tbody>
+                {% set mon_token = csrf_token('NNC_CLIENT_SECURITY_TOKEN') %}
+                {% for client in clients %}
+                    <tr>
+                        <td class="text-center">{{ client.name }}</td>
+                        <td class="text-center">{{ client.description }}</td>
+                        <td class="text-center">{{ client.street }}</td>
+                        <td class="text-center">{{ client.city }}</td>
+                        <td>
+                            <a href="{{ path('client-update', { id:client.id, token:mon_token }) }}"
+                               class="btn btn-warning btn-block">Configurer</a>
+                        </td>
+                        <td>
+                            <a href="{{ path('client-delete', { id:client.id, token:mon_token }) }}"
+                               class="btn btn-danger btn-block confirmation-required" data-text="Le client sera définitivement supprimé et n'apparaitra plus sur les devis qui lui sont rattachés.">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

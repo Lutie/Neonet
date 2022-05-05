@@ -6,6 +6,7 @@ use App\Entity\Bill;
 use App\Entity\Item;
 use App\Entity\Service;
 use App\Entity\User;
+use App\Entity\Client;
 use App\Type\BillType;
 use App\Service\PdfRender;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -76,10 +77,12 @@ class BillsController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $services = $em->getRepository(Service::class)->findAll();
         $items = $em->getRepository(Item::class)->findAll();
+        $clients = $em->getRepository(Client::class)->findAll();
 
         return $this->render('pages/createbill.html.twig', [
             'services' => $services,
             'items' => $items,
+            'clients' => $clients,
             'previous_services' => [],
             'previous_items' => [],
             'bill_title' => '',
@@ -99,10 +102,12 @@ class BillsController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $services = $em->getRepository(Service::class)->findAll();
         $items = $em->getRepository(Item::class)->findAll();
+        $clients = $em->getRepository(Client::class)->findAll();
 
         return $this->render('pages/createbill.html.twig', [
             'services' => $services,
             'items' => $items,
+            'clients' => $clients,
             'previous_services' => $bill->getServices(),
             'previous_items' => $bill->getItems(),
             'bill_id' => $bill->getId(),
@@ -143,6 +148,9 @@ class BillsController extends AbstractController
         $title = $request->request->get('title');
         $title = $this->check($title, 'title');
         $bill->setName($title);
+
+        $client = $em->getRepository(Client::class)->findOneBy(['id' => $request->request->get('client')]);
+        $bill->setClient($client);
 
         $description = $request->request->get('description');
         $description = $this->check($description, 'description');
@@ -200,6 +208,9 @@ class BillsController extends AbstractController
         $title = $request->request->get('title');
         $title = $this->check($title, 'title');
         $bill->setName($title);
+
+        $client = $em->getRepository(Client::class)->findOneBy(['id' => $request->request->get('client')]);
+        $bill->setClient($client);
 
         $description = $request->request->get('description');
         $description = $this->check($description, 'description');
@@ -338,6 +349,7 @@ class BillsController extends AbstractController
     function fetchBillDatas(Bill $bill) {
         $datas = [
             'description' => $bill->getDescription(),
+            'client' => $bill->getClient(),
             'title' => $bill->getName(),
             'price' => 0,
             'date' => new \DateTime(),

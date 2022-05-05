@@ -28,6 +28,12 @@ class Bill
     private $user;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="bills")
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=true, onDelete="CASCADE")
+     */
+    private $client;
+
+    /**
      * @ORM\Column(type="integer", length=10)
      * @Assert\Type("integer")
      */
@@ -139,6 +145,22 @@ class Bill
     public function setUser($user): void
     {
         $this->user = $user;
+    }
+
+    /**
+     * @return object Client
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * @param Client $client
+     */
+    public function setClient($client): void
+    {
+        $this->client = $client;
     }
 
     public function drop(): void

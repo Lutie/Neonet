@@ -1,6 +1,8 @@
-<p>HOIST GROUP</p>
-<p>Parc Silic – Immeuble Axe Seine<br>
-1 rue du 1er Mai<br>
-92000 Nanterre<br>
+{% if datas.client %}
+<p>{{ datas.client.name }}</p>
+<p>{{ datas.client.description }}<br>
+{{ datas.client.street }}<br>
+{{ datas.client.city }}<br>
+{% endif %}
 <br>
 le {{ date|date("d/m/Y") }}</p>

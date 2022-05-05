@@ -4,6 +4,7 @@
         <thead>
             <td class="col-xs-1 text-center sorter-false filter-false">Générer</br>PDF</td>
             <td class="col-xs-1 text-center">Titre</td>
+            <td class="col-xs-1 text-center">Client</td>
             <td class="col-xs-1 text-center">Création</td>
             <td class="col-xs-1 text-center">Dernière</br>modification</td>
             <td class="col-xs-1 text-center">Auteur</td>
@@ -20,6 +21,7 @@
                     <a href="{{ path('bill-pdf', { id:bill.id }) }}" target="_blank"><i class="fas fa-file-pdf fa-2x"></i></a>
                 </td>
                 <td class="text-center">{{ bill.name }}</td>
+                <td class="text-center">{{ bill.client }}</td>
                 <td class="text-center" data-sort="{{ bill.date|date("Ymd") }}">{{ bill.date|date("d/m/Y") }}</td>
                 <td class="text-center" data-sort="{{ bill.modificationDate|date("Ymd") }}">{{ bill.modificationDate|date("d/m/Y") }}</td>
                 <td class="text-center">{{ bill.user.email ?? 'owner' }}</td>

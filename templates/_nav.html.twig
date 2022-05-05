@@ -10,31 +10,39 @@
         <ul class="nav py-2 nav-fill navbar-grey d-flex flex-column flex-md-row">
             <li class="nav-item {{ route starts with 'user' ? 'active' }}">
                 <a href="{{ path('users') }}" class="nav-link">
-                    <i class="fas fa-users fa-2x"></i> / Liste des utilisateurs</a>
+                    <i class="fas fa-users fa"></i> Liste des utilisateurs</a>
             </li>
             <li class="nav-item {{ route starts with 'service' ? 'active' }}">
                 <a href="{{ path('services') }}" class="nav-link">
-                    <i class="fas fa-handshake fa-2x"></i> / Liste des services</a>
+                    <i class="fas fa-handshake fa"></i> Liste des services</a>
             </li>
             <li class="nav-item {{ route starts with 'item' ? 'active' }}">
                 <a href="{{ path('items') }}" class="nav-link">
-                    <i class="fas fa-sitemap fa-2x"></i> / Liste des options</a>
+                    <i class="fas fa-sitemap fa"></i> Liste des options</a>
             </li>
             <li class="nav-item {{ route starts with 'bill' ? 'active' }}">
                 <a href="{{ path('bills') }}" class="nav-link">
-                    <i class="fas fa-copy fa-2x"></i> / Liste des devis</a>
+                    <i class="fas fa-copy fa"></i> Liste des devis</a>
             </li>
             <li class="nav-item {{ route starts with 'bill' ? 'active' }}">
                 <a href="{{ path('bill-create') }}" class="nav-link">
-                    <i class="fas fa-copy fa-2x"></i> / Créer un devis</a>
+                    <i class="fas fa-copy fa"></i> Créer un devis</a>
             </li>
             <li class="nav-item {{ route starts with 'staging' ? 'active' }}">
                 <a href="{{ path('stagings') }}" class="nav-link">
-                    <i class="fas fa-copy fa-2x"></i> / Liste des stagings</a>
+                    <i class="fas fa-copy fa"></i> Liste des stagings</a>
             </li>
             <li class="nav-item {{ route starts with 'staging' ? 'active' }}">
                 <a href="{{ path('staging-create') }}" class="nav-link">
-                    <i class="fas fa-copy fa-2x"></i> / Créer un staging</a>
+                    <i class="fas fa-copy fa"></i> Créer un staging</a>
+            </li>
+            <li class="nav-item {{ route starts with 'client' ? 'active' }}">
+                <a href="{{ path('clients') }}" class="nav-link">
+                    <i class="fas fa-copy fa"></i> Liste des clients</a>
+            </li>
+            <li class="nav-item {{ route starts with 'client' ? 'active' }}">
+                <a href="{{ path('client-create') }}" class="nav-link">
+                    <i class="fas fa-copy fa"></i> Créer un client</a>
             </li>
         </ul>
     {% else %}

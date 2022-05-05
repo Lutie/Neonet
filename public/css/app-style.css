@@ -105,3 +105,9 @@ legend { width: 70%; border-bottom: #868686 1px solid; margin: 0 auto; }
 .glow {
     text-shadow: 0 0 10px #fff;
 }
+
+.legal {
+    opacity: 0.75;
+    font-size: 12px;
+    font-style: italic;
+}

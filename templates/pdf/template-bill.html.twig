@@ -30,7 +30,7 @@
         </div>
         <div>
             <p>Devis n° {{ datas.number }} - <strong>{{ datas.title }}</strong></p>
-            <p>(Ce document est édité à titre provisoire)</p>
+            <p style="font-size: 12px; opacity: 0.75; font-style: italic;">(Ce document est édité à titre provisoire et est valable pour une durée de un mois après édition)</p>
         </div>
     </div>
 
@@ -64,7 +64,10 @@
             <th class="text-center">
                 <label for="bill_total">Total</label>
             </th>
-            <th class="text-center">{{ datas.price }} €</th>
+            <th class="text-center">
+                {{ datas.price }} € (HT) <br>
+                <span style="font-size: 12px; opacity: 0.75; font-style: italic;">(montant hors taxes, la TVA est ajoutée et calculée en fonction de la TVA en rigueur)</span>
+            </th>
         </tr>
     </table>
 
