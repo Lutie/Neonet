@@ -39,7 +39,7 @@ class ClientController extends AbstractController
         $em->remove($client);
         $em->flush();
 
-        $this->addFlash('success', 'Le client a été supprimée.');
+        $this->addFlash('success', 'Le client a été supprimé.');
 
         return $this->redirectToRoute('clients');
     }
