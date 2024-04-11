@@ -108,6 +108,7 @@ class BillsController extends AbstractController
             'services' => $services,
             'items' => $items,
             'clients' => $clients,
+            'previous_client' => $bill->getClient(),
             'previous_services' => $bill->getServices(),
             'previous_items' => $bill->getItems(),
             'bill_id' => $bill->getId(),

@@ -14,11 +14,11 @@
         <form id="billForm" method="post" action="{{ path('bill-update', {id:bill_id, token:mon_token}) }}" target="_self">
     {% endif %}
             <div class="form-group">
-                <label for="description">Client (faculatif)</label>
+                <label for="description">Client (facultatif)</label>
                 <select name="client" id="client" class="form-control">
-                    <option value="" selected="selected" disabled="disabled">Choisir un client</option>
+                    <option value="" disabled="disabled">Choisir un client</option>
                     {% for client in clients %}
-                        <option value="{{client.id}}">{{client.name}}</option>
+                        <option value="{{client.id}}" {{ previous_client is not null and previous_client.id == client.id ? 'selected="selected"' : '' }}>{{client.name}}</option>
                     {% endfor %}
                 </select>
             </div>
