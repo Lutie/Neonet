@@ -2,13 +2,15 @@
     <table id="bill-list" class="table table-bordered table-striped">
 
         <thead>
-            <td class="col-xs-1 text-center sorter-false filter-false">Générer</br>PDF</td>
+            <td class="col-xs-1 text-center sorter-false filter-false">Générer</br>Devis (PDF)</td>
+            <td class="col-xs-1 text-center sorter-false filter-false">Générer</br>Facture (PDF)</td>
             <td class="col-xs-1 text-center">Titre</td>
             <td class="col-xs-1 text-center">Client</td>
             <td class="col-xs-1 text-center">Création</td>
             <td class="col-xs-1 text-center">Dernière</br>modification</td>
             <td class="col-xs-1 text-center">Auteur</td>
             <td class="col-xs-1 text-center">Montant</td>
+            <td class="col-xs-1 text-center">N° de Facture</td>
             <td class="col-xs-1 text-center sorter-false filter-false">Modifier</td>
             <td class="col-xs-1 text-center sorter-false filter-false">Supprimer</td>
         </thead>
@@ -18,6 +20,9 @@
         {% for bill in bills %}
             <tr>
                 <td class="text-center">
+                    <a href="{{ path('invoice-pdf', { id:bill.id }) }}" target="_blank"><i class="fas fa-file-pdf fa-2x"></i></a>
+                </td>
+                <td class="text-center">
                     <a href="{{ path('bill-pdf', { id:bill.id }) }}" target="_blank"><i class="fas fa-file-pdf fa-2x"></i></a>
                 </td>
                 <td class="text-center">{{ bill.name }}</td>
@@ -26,6 +31,7 @@
                 <td class="text-center" data-sort="{{ bill.modificationDate|date("Ymd") }}">{{ bill.modificationDate|date("d/m/Y") }}</td>
                 <td class="text-center">{{ bill.user.email ?? 'owner' }}</td>
                 <td class="text-center">{{ bill.price }} €</td>
+                <td class="text-center">{{ bill.billNumber }}</td>
                 <td class="text-center">
                     <a href="{{ path('bill-modify', { id:bill.id, token:mon_token }) }}"
                        class="btn btn-warning btn-block">Modifier</a>

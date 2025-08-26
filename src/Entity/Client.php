@@ -11,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Client
 {
-
     use IdTrait;
 
     use NameTrait;
@@ -82,4 +81,25 @@ class Client
         $this->bills = $bills;
     }
 
+    /**
+     * @ORM\Id()
+     * @ORM\Column(type="integer")
+     */
+    private $code;
+
+    /**
+     * @return integer
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param integer $id
+     */
+    public function setCode($code): void
+    {
+        $this->code = $code;
+    }
 }

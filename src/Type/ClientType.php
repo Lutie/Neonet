@@ -38,6 +38,12 @@ class ClientType extends AbstractType
                 'attr' => [
                     'placeholder' =>'92000 Nanterre',
                 ]
+            ])
+            ->add('code', IntegerType::class, [
+                'label' => 'Code client',
+                'attr' => [
+                    'placeholder' =>'0014',
+                ]
             ]);
     }
 }

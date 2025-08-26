@@ -87,6 +87,8 @@ class BillsController extends AbstractController
             'previous_items' => [],
             'bill_title' => '',
             'bill_description' => '',
+            'bill_number' => '',
+            'purchase_order' => '',
         ]);
     }
 
@@ -114,6 +116,8 @@ class BillsController extends AbstractController
             'bill_id' => $bill->getId(),
             'bill_title' => $bill->getName(),
             'bill_description' => $bill->getDescription(),
+            'bill_number' => $bill->getBillNumber(),
+            'purchase_order' => $bill->getPurchaseOrder(),
         ]);
     }
 
@@ -160,6 +164,14 @@ class BillsController extends AbstractController
         $total = $request->request->get('total');
         $total = $this->check($total, 'total');
         $bill->setPrice($total);
+
+        $billNumber = $request->request->get('bill_number');
+        $billNumber = $this->check($billNumber, 'bill_number');
+        $billNumber->setPrice($billNumber);
+
+        $purchaseOrder = $request->request->get('purchase_order');
+        $purchaseOrder = $this->check($purchaseOrder, 'purchase_order');
+        $purchaseOrder->setPrice($purchaseOrder);
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
         if($user instanceof User) { $bill->setUser($user); } else { $bill->setUser(null); }
@@ -300,41 +312,59 @@ class BillsController extends AbstractController
     }
 
     /**
-     * @Route("/bill-to-pdf/{id}", requirements={"id":"\d+"}, name="bill-pdf")
+     * @Route("/invoice-to-pdf/{id}", requirements={"id":"\d+"}, name="invoice-pdf")
      */
-    public function billToPdf(Bill $bill)
+    public function invoiceToPdf(Bill $bill)
     {
         $this->generatePdf($bill);
     }
 
     /**
-     * @Route("/bill-to-pdf/test", name="bill-pdf-test")
+     * @Route("/invoice-to-pdf/test", name="invoice-pdf-test")
      */
-    public function testToPdf()
+    public function testInvoiceToPdf()
     {
         $this->generatePdf();
     }
 
-    function generatePdf(Bill $bill = null) {
+    /**
+     * @Route("/bill-to-pdf/{id}", requirements={"id":"\d+"}, name="bill-pdf")
+     */
+    public function billToPdf(Bill $bill)
+    {
+        $this->generatePdf($bill, true);
+    }
+
+    /**
+     * @Route("/bill-to-pdf/test", name="bill-pdf-test")
+     */
+    public function testBillToPdf()
+    {
+        $this->generatePdf(null, true);
+    }
+
+    function generatePdf(Bill $bill = null, $fullBill = false) {
         $bill = $bill ?? $this->fakeBill();
+        $docTypeName = $fullBill ? "Facture" : "Devis";
 
         // We get our services and items
         $datas = $this->fetchBillDatas($bill);
         // Retrieve the HTML generated in our twig file
         $html = $this->renderView('pdf/template-bill.html.twig', [
+            'fullBill' => $fullBill,
             'datas' => $datas,
             'nncLogoUrl' => getenv('NNC_LOGO_URL'),
             'partnerLogoUrl' => getenv('PARTNER_LOGO_URL'),
         ]);
 
         $pdfRender = new PdfRender;
-        $pdfRender->generatePdf($html, "Devis " . $bill->getId() . " " . $bill->getName());
+        $pdfRender->generatePdf($html, $docTypeName . " " . $bill->getId() . " " . $bill->getName());
     }
 
     function fakeBill() {
         $bill = new Bill();
         $bill->setId(0);
-        $bill->setName("Devis de test");
+        $bill->setName("Test");
         $bill->setUser(null);
         $bill->setServices([1, 2, 4]);
         $bill->setItems([

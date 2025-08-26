@@ -56,6 +56,20 @@ class Bill
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="integer", length=20, nullable=true)
+     * @Assert\Type("integer")
+     * @Assert\Length(max=20)
+     */
+    private $billNumber = null;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     * @Assert\Type("string")
+     * @Assert\Length(max=100)
+     */
+    private $purchaseOrder = null;
+
     public function __construct()
     {
         $this->date = new \DateTime();
@@ -183,6 +197,38 @@ class Bill
     public function setDescription($description): void
     {
         $this->description = $description;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getBillNumber()
+    {
+        return $this->billNumber;
+    }
+
+    /**
+     * @return integer
+     */
+    public function setBillNumber()
+    {
+        $this->billNumber = $billNumber;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getPurchaseOrder()
+    {
+        return $this->purchaseOrder;
+    }
+
+    /**
+     * @return integer
+     */
+    public function setPurchaseOrder()
+    {
+        $this->purchaseOrder = $purchaseOrder;
     }
 
 }
