@@ -57,18 +57,22 @@ class Bill
     private $description;
 
     /**
-     * @ORM\Column(type="integer", length=20, nullable=true)
-     * @Assert\Type("integer")
+     * @ORM\Column(type="string", length=20, nullable=true)
      * @Assert\Length(max=20)
      */
     private $billNumber = null;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      * @Assert\Type("string")
      * @Assert\Length(max=100)
      */
     private $purchaseOrder = null;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $fullBillDate = null;
 
     public function __construct()
     {
@@ -210,7 +214,7 @@ class Bill
     /**
      * @return integer
      */
-    public function setBillNumber()
+    public function setBillNumber($billNumber)
     {
         $this->billNumber = $billNumber;
     }
@@ -229,6 +233,48 @@ class Bill
     public function setPurchaseOrder()
     {
         $this->purchaseOrder = $purchaseOrder;
+    }
+
+    /**
+     * @return object \DateTime
+     */
+    public function getModificationDate()
+    {
+        return $this->modificationDate;
+    }
+
+    /**
+     * @param \DateTime $modificationDate
+     */
+    public function setModificationDate($modificationDate): void
+    {
+        $this->modificationDate = $modificationDate;
+    }
+
+    /**
+     * @return object \DateTime
+     */
+    public function getFullBillDate()
+    {
+        return $this->fullBillDate;
+    }
+
+    /**
+     * @param \DateTime $modificationDate
+     */
+    public function setFullBillDate($fullBillDate): void
+    {
+        $this->fullBillDate = $fullBillDate;
+    }
+
+    public function getDueDate()
+    {
+        if (!$this->fullBillDate) {
+            return null;
+        }
+
+        $due = clone $this->fullBillDate;
+        return $due->modify('+1 month');
     }
 
 }

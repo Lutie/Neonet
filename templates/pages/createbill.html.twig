@@ -24,7 +24,12 @@
             </div>
 
             <div class="form-group">
-                <label for="order" class="required">Ordre d'achat <span id="title-hint" class="small">(4 caractères minimum)</span></label>
+                <label for="title" class="required">Titre du devis <span id="title-hint" class="small">(5 caractères minimum)</span></label>
+                <input type="text" name="title" id="title" value="{{ bill_title }}" class="form-control"/>
+            </div>
+
+            <div class="form-group">
+                <label for="order">Ordre d'achat</label>
                 <input type="text" name="order" id="order" value="{{ purchase_order }}" class="form-control"/>
             </div>
 

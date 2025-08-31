@@ -82,8 +82,7 @@ class Client
     }
 
     /**
-     * @ORM\Id()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $code;
 
@@ -101,5 +100,26 @@ class Client
     public function setCode($code): void
     {
         $this->code = $code;
+    }
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $siret;
+
+    /**
+     * @return string
+     */
+    public function getSiret()
+    {
+        return $this->siret;
+    }
+
+    /**
+     * @param string $siret
+     */
+    public function setSiret($siret)
+    {
+        $this->siret = $siret;
     }
 }

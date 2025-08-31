@@ -3,6 +3,9 @@
 <p>{{ datas.client.description }}<br>
 {{ datas.client.street }}<br>
 {{ datas.client.city }}<br>
+{% if fullBill %}
+Siret °{{ datas.client.siret }}<br>
+{% endif %}
 {% endif %}
 <br>
 le {{ date|date("d/m/Y") }}</p>

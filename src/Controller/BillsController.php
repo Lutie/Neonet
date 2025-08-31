@@ -83,6 +83,7 @@ class BillsController extends AbstractController
             'services' => $services,
             'items' => $items,
             'clients' => $clients,
+            'previous_client' => null,
             'previous_services' => [],
             'previous_items' => [],
             'bill_title' => '',
@@ -167,11 +168,11 @@ class BillsController extends AbstractController
 
         $billNumber = $request->request->get('bill_number');
         $billNumber = $this->check($billNumber, 'bill_number');
-        $billNumber->setPrice($billNumber);
+        $bill->setBillNumber($billNumber);
 
         $purchaseOrder = $request->request->get('purchase_order');
         $purchaseOrder = $this->check($purchaseOrder, 'purchase_order');
-        $purchaseOrder->setPrice($purchaseOrder);
+        $bill->setBillNumber($purchaseOrder);
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
         if($user instanceof User) { $bill->setUser($user); } else { $bill->setUser(null); }
@@ -344,21 +345,62 @@ class BillsController extends AbstractController
     }
 
     function generatePdf(Bill $bill = null, $fullBill = false) {
+        $em = $this->getDoctrine()->getManager();
         $bill = $bill ?? $this->fakeBill();
         $docTypeName = $fullBill ? "Facture" : "Devis";
 
+        if (!$bill->getFullBillDate()) {
+            $now = new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris'));
+            $bill->setFullBillDate($now);
+
+            // bornes du mois en cours
+            $from = $now->modify('first day of this month midnight');
+            $to   = $from->modify('first day of next month midnight');
+
+            // on compte les factures déjà émises ce mois-ci
+            $count = $em->getRepository(Bill::class)->createQueryBuilder('b')
+                ->select('COUNT(b.id)')
+                ->andWhere('b.fullBillDate >= :from')
+                ->andWhere('b.fullBillDate < :to')
+                ->setParameter('from', $from)
+                ->setParameter('to', $to)
+                ->getQuery()
+                ->getSingleScalarResult();
+
+            $seq = (int)$count + 1; // la nouvelle facture est la suivante
+
+            // numéro au format YYYYMMDD#### (#### = compteur mensuel zero-padded 4)
+            $billNumber = $now->format('Ymd') . str_pad((string)$seq, 4, '0', STR_PAD_LEFT);
+            $bill->setBillNumber($billNumber);
+            $em->flush();
+        }
+
         // We get our services and items
         $datas = $this->fetchBillDatas($bill);
+        $datas['billNumber'] = $bill->getBillNumber();
         // Retrieve the HTML generated in our twig file
         $html = $this->renderView('pdf/template-bill.html.twig', [
             'fullBill' => $fullBill,
             'datas' => $datas,
+            'addressTop' => getenv('ADDRESS_TOP'),
+            'addressBottom' => getenv('ADDRESS_BOTTOM'),
+            'siren' => getenv('SIREN'),
+            'billEmail' => getenv('BILL_EMAIL'),
+            'billPhone' => getenv('CONTACT_PHONE'),
             'nncLogoUrl' => getenv('NNC_LOGO_URL'),
             'partnerLogoUrl' => getenv('PARTNER_LOGO_URL'),
+            'bankName' => getenv('BANK_NAME'),
+            'bankIban' => getenv('BANK_IBAN'),
+            'bankBic' => getenv('BANK_BIC'),
+            'tvaIntracom' => getenv('TVA_INTRACOM'),
+            'bill' => $bill,
         ]);
 
+        $old = error_reporting();
+        error_reporting($old & ~E_WARNING);
         $pdfRender = new PdfRender;
-        $pdfRender->generatePdf($html, $docTypeName . " " . $bill->getId() . " " . $bill->getName());
+        $pdfRender->generatePdf($html, $docTypeName . " °" . $bill->getBillNumber() . " " . $bill->getName());
+        error_reporting($old);
     }
 
     function fakeBill() {
@@ -422,6 +464,10 @@ class BillsController extends AbstractController
             ];
             $mapID++;
         }
+
+        $datas['tva'] = getenv('TVA_VALUE');
+        $datas['price_from_tva'] = $datas['price'] * $datas['tva'] / 100;
+        $datas['price_with_tva'] = $datas['price'] + $datas['price_from_tva'];
 
         // reindex our datas permit to getting services in the right order when rendering them in the template
         sort($datas['services']);

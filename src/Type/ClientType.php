@@ -39,10 +39,16 @@ class ClientType extends AbstractType
                     'placeholder' =>'92000 Nanterre',
                 ]
             ])
-            ->add('code', IntegerType::class, [
+            ->add('code', TextType::class, [
                 'label' => 'Code client',
                 'attr' => [
                     'placeholder' =>'0014',
+                ]
+            ])
+            ->add('siret', TextType::class, [
+                'label' => 'Siret',
+                'attr' => [
+                    'placeholder' =>'45000000000000',
                 ]
             ]);
     }
