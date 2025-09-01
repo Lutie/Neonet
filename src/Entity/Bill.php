@@ -230,7 +230,7 @@ class Bill
     /**
      * @return integer
      */
-    public function setPurchaseOrder()
+    public function setPurchaseOrder($purchaseOrder)
     {
         $this->purchaseOrder = $purchaseOrder;
     }

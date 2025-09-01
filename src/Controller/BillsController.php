@@ -234,6 +234,10 @@ class BillsController extends AbstractController
         $total = $this->check($total, 'total');
         $bill->setPrice($total);
 
+        $purchaseOrder = $request->request->get('purchaseOrder');
+        $purchaseOrder = $this->check($purchaseOrder, 'purchaseOrder');
+        $bill->setPurchaseOrder($purchaseOrder);
+
         $bill->setModificationDate(new \DateTime());
 
         $em->persist($bill);
@@ -333,6 +337,10 @@ class BillsController extends AbstractController
      */
     public function billToPdf(Bill $bill)
     {
+        if (!$bill->getPurchaseOrder()) {
+            $this->addFlash('danger', 'La facture ne peux être créée car un numéro de commande (ordre achat) est nécessaire.');
+            return $this->redirectToRoute('bills');
+        }
         $this->generatePdf($bill, true);
     }
 

@@ -2,14 +2,14 @@
     <table id="bill-list" class="table table-bordered table-striped">
 
         <thead>
-            <td class="col-xs-1 text-center sorter-false filter-false">Générer</br>Devis (PDF)</td>
-            <td class="col-xs-1 text-center sorter-false filter-false">Générer</br>Facture (PDF)</td>
+            <td class="col-xs-1 text-center sorter-false filter-false">Devis (PDF)</td>
+            <td class="col-xs-1 text-center sorter-false filter-false">Facture (PDF)</td>
             <td class="col-xs-1 text-center">Titre</td>
             <td class="col-xs-1 text-center">Client</td>
             <td class="col-xs-1 text-center">Création</td>
             <td class="col-xs-1 text-center">Dernière</br>modification</td>
-            <td class="col-xs-1 text-center">Auteur</td>
             <td class="col-xs-1 text-center">Montant</td>
+            <td class="col-xs-1 text-center">Ordre d'achat</td>
             <td class="col-xs-1 text-center">N° de Facture</td>
             <td class="col-xs-1 text-center sorter-false filter-false">Modifier</td>
             <td class="col-xs-1 text-center sorter-false filter-false">Supprimer</td>
@@ -29,16 +29,15 @@
                 <td class="text-center">{{ bill.client }}</td>
                 <td class="text-center" data-sort="{{ bill.date|date("Ymd") }}">{{ bill.date|date("d/m/Y") }}</td>
                 <td class="text-center" data-sort="{{ bill.modificationDate|date("Ymd") }}">{{ bill.modificationDate|date("d/m/Y") }}</td>
-                <td class="text-center">{{ bill.user.email ?? 'owner' }}</td>
                 <td class="text-center">{{ bill.price }} €</td>
+                <td class="text-center">{{ bill.purchaseOrder ? bill.purchaseOrder : '<bleh>' }}</td>
                 <td class="text-center">{{ bill.billNumber }}</td>
                 <td class="text-center">
-                    <a href="{{ path('bill-modify', { id:bill.id, token:mon_token }) }}"
-                       class="btn btn-warning btn-block">Modifier</a>
+                    <a href="{{ path('bill-modify', { id:bill.id, token:mon_token }) }}">✏️</a>
                 </td>
                 <td class="text-center">
                     <a href="{{ path('bill-delete', { id:bill.id, token:mon_token }) }}"
-                       class="btn btn-danger btn-block confirmation-required" data-text="La facture sera définitivement supprimée.">Supprimer</a>
+                       class="confirmation-required" data-text="La facture sera définitivement supprimée.">🗑️</a>
                 </td>
             </tr>
         {% endfor %}

@@ -29,7 +29,7 @@
                 <!-- à réactiver quand le partner aura un logo
                     <img src="{{ partnerLogoUrl }}" style="width: 100px">
                 -->
-                <p>N° SIREN : {{ siren }}</p>
+                <p style="color: #34a4eb">N° SIREN : {{ siren }}</p>
                 <p>{{ addressTop }}<br>
                 {{ addressBottom }}</p>
                 <p>{{ billPhone }}</p>
@@ -37,7 +37,7 @@
             </th>
             <th>
                 <div style="width: 50%;">
-                    {% include 'pdf/address.html.twig' with {'date': datas.date} %}
+                    {% include 'pdf/address.html.twig' with {'date': datas.date, 'code': bill.client.code} %}
                 </div>
             </th>
         </tr>
@@ -48,7 +48,7 @@
             {% endif %}
         </tr>
         {% if fullBill %}
-        <p>Code Client : {{ bill.client.code }}, Date d'émission : {{ bill.fullBillDate|date("d/m/Y") }}, Date d'échéance : {{ bill.getDueDate|date("d/m/Y") }}
+        <p>Ordre d'achat : {{ bill.purchaseOrder }}, Date d'émission : {{ bill.fullBillDate|date("d/m/Y") }}, <b>Date d'échéance : {{ bill.getDueDate|date("d/m/Y") }}</b>
         {% endif %}
     </table>
 

@@ -1,11 +1,13 @@
 {% if datas.client %}
 <p>{{ datas.client.name }}</p>
+<span style="color: #34a4eb">N° SIRET : {{ datas.client.siret }}</span>
+<br><br>
 <p>{{ datas.client.description }}<br>
 {{ datas.client.street }}<br>
 {{ datas.client.city }}<br>
 {% if fullBill %}
-Siret °{{ datas.client.siret }}<br>
+Code Client {{ code }}
 {% endif %}
 {% endif %}
-<br>
+<br><br>
 le {{ date|date("d/m/Y") }}</p>
