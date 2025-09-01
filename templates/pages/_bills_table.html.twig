@@ -30,7 +30,48 @@
                 <td class="text-center" data-sort="{{ bill.date|date("Ymd") }}">{{ bill.date|date("d/m/Y") }}</td>
                 <td class="text-center" data-sort="{{ bill.modificationDate|date("Ymd") }}">{{ bill.modificationDate|date("d/m/Y") }}</td>
                 <td class="text-center">{{ bill.price }} €</td>
-                <td class="text-center">{{ bill.purchaseOrder ? bill.purchaseOrder : '<bleh>' }}</td>
+                <td class="text-center">
+                    {% if bill.purchaseOrder %}
+                        {{ bill.purchaseOrder }}
+                    {% else %}
+                        <button type="button"
+                            data-toggle="modal"
+                            data-target="#poModal-{{ bill.id }}">✏️</button>
+
+                        {# Modale unique par ligne (id suffixé par bill.id) #}
+                        <div class="modal fade" id="poModal-{{ bill.id }}" tabindex="-1" role="dialog" aria-labelledby="poModalLabel-{{ bill.id }}" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <form method="post"
+                                    action="{{ path('bill_set_po', { id: bill.id }) }}"
+                                    class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="poModalLabel-{{ bill.id }}">Numéro de bon de commande</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                    <label for="purchaseOrder-{{ bill.id }}">Valeur</label>
+                                    <input type="text"
+                                        id="purchaseOrder-{{ bill.id }}"
+                                        name="purchaseOrder"
+                                        class="form-control"
+                                        required>
+                                    </div>
+                                    <input type="hidden" name="_token" value="{{ csrf_token('set_po_' ~ bill.id) }}">
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-dismiss="modal">Annuler</button>
+                                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    {% endif %}
+                </td>
                 <td class="text-center">{{ bill.billNumber }}</td>
                 <td class="text-center">
                     <a href="{{ path('bill-modify', { id:bill.id, token:mon_token }) }}">✏️</a>

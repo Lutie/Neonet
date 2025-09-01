@@ -12,6 +12,7 @@ use App\Service\PdfRender;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -484,5 +485,30 @@ class BillsController extends AbstractController
 
     function custom_sort($a,$b) {
         return $a['index']>$b['index'];
+    }
+
+    /**
+     * @Route("/bills/{id}/set-po", name="bill_set_po", methods={"POST"})
+     */
+    public function setPurchaseOrder(Bill $bill, Request $request): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Sécurité CSRF
+        if (!$this->isCsrfTokenValid('set_po_'.$bill->getId(), $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('CSRF token invalide.');
+        }
+
+        $po = trim((string) $request->request->get('purchaseOrder'));
+        if ($po === '') {
+            $this->addFlash('warning', 'La valeur ne peut pas être vide.');
+            return $this->redirectToRoute('bills');
+        }
+
+        $bill->setPurchaseOrder($po);
+        $em->flush();
+        $this->addFlash('success', 'Bon de commande enregistré.');
+
+        return $this->redirectToRoute('bills');
     }
 }
