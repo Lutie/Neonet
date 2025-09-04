@@ -36,24 +36,22 @@
                 <p>{{ billEmail }}</p>
             </th>
             <th>
-                <div style="width: 50%;">
-                    {% include 'pdf/address.html.twig' with {'date': datas.date, 'code': bill.client.code} %}
-                </div>
+                {% include 'pdf/address.html.twig' with {'date': datas.date, 'code': bill.client.code} %}
             </th>
         </tr>
         <tr>
-            <p>{{ fullBill ? 'Facture' : 'Devis'}} n° {{ fullBill ? datas.billNumber : datas.number }} - <strong>{{ datas.title }}</strong></p>
+            <p>{{ fullBill ? 'Facture' : 'Devis'}} - {{ fullBill ? datas.billNumber : datas.number }} - <strong>{{ datas.title }}</strong></p>
             {% if not fullBill %}
             <p style="font-size: 12px; opacity: 0.75; font-style: italic;">(Ce document est édité à titre provisoire et est valable pour une durée de un mois après édition)</p>
             {% endif %}
         </tr>
         {% if fullBill %}
-        <p>Ordre d'achat : {{ bill.purchaseOrder }}, Date d'émission : {{ bill.fullBillDate|date("d/m/Y") }}, <b>Date d'échéance : {{ bill.getDueDate|date("d/m/Y") }}</b>
+        <p>Commande d'achat : {{ bill.purchaseOrder }}, Date d'émission : {{ bill.fullBillDate|date("d/m/Y") }}, <b>Date d'échéance : {{ bill.getDueDate|date("d/m/Y") }}</b>
         {% endif %}
     </table>
 
     {% for service in datas.services %}
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped" style="font-size: 12px">
             <tr>
                 <th colspan="4">
                     {{ service.name }}
@@ -61,12 +59,12 @@
             </tr>
             {% for item in service.datas %}
                 <tr>
-                    <th>
+                    <th style="padding:2px 6px; line-height:1.2;">
                         <label>{{ item.name }}</label>
                     </th>
-                    <th class="text-center">{{ item.quantity }}</th>
-                    <th class="text-center">x {{ item.price }} €</th>
-                    <th class="text-center">{{ item.total > 0 ? '= ' ~ item.total ~ ' €' : 'gratuit' }}</th>
+                    <th class="text-center" style="padding:3px 6px; line-height:1.2;">{{ item.quantity }}</th>
+                    <th class="text-center" style="padding:3px 6px; line-height:1.2;">x {{ item.price }} €</th>
+                    <th class="text-center" style="padding:3px 6px; line-height:1.2;">{{ item.total > 0 ? '= ' ~ item.total ~ ' €' : 'gratuit' }}</th>
                 </tr>
             {% endfor %}
         </table>

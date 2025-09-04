@@ -171,9 +171,9 @@ class BillsController extends AbstractController
         $billNumber = $this->check($billNumber, 'bill_number');
         $bill->setBillNumber($billNumber);
 
-        $purchaseOrder = $request->request->get('purchase_order');
-        $purchaseOrder = $this->check($purchaseOrder, 'purchase_order');
-        $bill->setBillNumber($purchaseOrder);
+        $purchaseOrder = $request->request->get('purchaseOrder');
+        $purchaseOrder = $this->check($purchaseOrder, 'purchaseOrder');
+        $bill->setPurchaseOrder($purchaseOrder);
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
         if($user instanceof User) { $bill->setUser($user); } else { $bill->setUser(null); }
@@ -358,7 +358,7 @@ class BillsController extends AbstractController
         $bill = $bill ?? $this->fakeBill();
         $docTypeName = $fullBill ? "Facture" : "Devis";
 
-        if (!$bill->getFullBillDate()) {
+        if ($fullBill && !$bill->getFullBillDate()) {
             $now = new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris'));
             $bill->setFullBillDate($now);
 
@@ -408,7 +408,7 @@ class BillsController extends AbstractController
         $old = error_reporting();
         error_reporting($old & ~E_WARNING);
         $pdfRender = new PdfRender;
-        $pdfRender->generatePdf($html, $docTypeName . " °" . $bill->getBillNumber() . " " . $bill->getName());
+        $pdfRender->generatePdf($html, $docTypeName . " - " . ($fullBill ? $bill->getBillNumber() : $bill->getId()) . " " . $bill->getName());
         error_reporting($old);
     }
 
