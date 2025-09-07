@@ -408,7 +408,7 @@ class BillsController extends AbstractController
         $old = error_reporting();
         error_reporting($old & ~E_WARNING);
         $pdfRender = new PdfRender;
-        $pdfRender->generatePdf($html, $docTypeName . " - " . ($fullBill ? $bill->getBillNumber() : $bill->getId()) . " " . $bill->getName());
+        $pdfRender->generatePdf($html, $docTypeName . " - " . ($fullBill ? $bill->getBillNumber() : $bill->getId()) . " - " . $bill->getName());
         error_reporting($old);
     }
 
