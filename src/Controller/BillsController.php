@@ -27,7 +27,7 @@ class BillsController extends AbstractController
     public function __invoke(Request $request){
         $em = $this->getDoctrine()->getManager();
         if($this->get('security.authorization_checker')->isGranted("ROLE_ADMIN")) {
-            $bills = $em->getRepository(Bill::class)->findAll();
+            $bills = $em->getRepository(Bill::class)->findBy([], ['id' => 'DESC']);
         } else {
             $bills = $em->getRepository(Bill::class)->findBy([
                 'user' => $this->get('security.token_storage')->getToken()->getUser()
