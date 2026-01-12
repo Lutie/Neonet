@@ -12,6 +12,7 @@ use App\Service\PdfRender;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -26,7 +27,7 @@ class BillsController extends AbstractController
     public function __invoke(Request $request){
         $em = $this->getDoctrine()->getManager();
         if($this->get('security.authorization_checker')->isGranted("ROLE_ADMIN")) {
-            $bills = $em->getRepository(Bill::class)->findAll();
+            $bills = $em->getRepository(Bill::class)->findBy([], ['id' => 'DESC']);
         } else {
             $bills = $em->getRepository(Bill::class)->findBy([
                 'user' => $this->get('security.token_storage')->getToken()->getUser()
@@ -83,10 +84,13 @@ class BillsController extends AbstractController
             'services' => $services,
             'items' => $items,
             'clients' => $clients,
+            'previous_client' => null,
             'previous_services' => [],
             'previous_items' => [],
             'bill_title' => '',
             'bill_description' => '',
+            'bill_number' => '',
+            'purchase_order' => '',
         ]);
     }
 
@@ -114,6 +118,8 @@ class BillsController extends AbstractController
             'bill_id' => $bill->getId(),
             'bill_title' => $bill->getName(),
             'bill_description' => $bill->getDescription(),
+            'bill_number' => $bill->getBillNumber(),
+            'purchase_order' => $bill->getPurchaseOrder(),
         ]);
     }
 
@@ -160,6 +166,14 @@ class BillsController extends AbstractController
         $total = $request->request->get('total');
         $total = $this->check($total, 'total');
         $bill->setPrice($total);
+
+        $billNumber = $request->request->get('bill_number');
+        $billNumber = $this->check($billNumber, 'bill_number');
+        $bill->setBillNumber($billNumber);
+
+        $purchaseOrder = $request->request->get('purchaseOrder');
+        $purchaseOrder = $this->check($purchaseOrder, 'purchaseOrder');
+        $bill->setPurchaseOrder($purchaseOrder);
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
         if($user instanceof User) { $bill->setUser($user); } else { $bill->setUser(null); }
@@ -220,6 +234,10 @@ class BillsController extends AbstractController
         $total = $request->request->get('total');
         $total = $this->check($total, 'total');
         $bill->setPrice($total);
+
+        $purchaseOrder = $request->request->get('purchaseOrder');
+        $purchaseOrder = $this->check($purchaseOrder, 'purchaseOrder');
+        $bill->setPurchaseOrder($purchaseOrder);
 
         $bill->setModificationDate(new \DateTime());
 
@@ -300,41 +318,104 @@ class BillsController extends AbstractController
     }
 
     /**
-     * @Route("/bill-to-pdf/{id}", requirements={"id":"\d+"}, name="bill-pdf")
+     * @Route("/invoice-to-pdf/{id}", requirements={"id":"\d+"}, name="invoice-pdf")
      */
-    public function billToPdf(Bill $bill)
+    public function invoiceToPdf(Bill $bill)
     {
         $this->generatePdf($bill);
     }
 
     /**
-     * @Route("/bill-to-pdf/test", name="bill-pdf-test")
+     * @Route("/invoice-to-pdf/test", name="invoice-pdf-test")
      */
-    public function testToPdf()
+    public function testInvoiceToPdf()
     {
         $this->generatePdf();
     }
 
-    function generatePdf(Bill $bill = null) {
+    /**
+     * @Route("/bill-to-pdf/{id}", requirements={"id":"\d+"}, name="bill-pdf")
+     */
+    public function billToPdf(Bill $bill)
+    {
+        if (!$bill->getPurchaseOrder()) {
+            $this->addFlash('danger', 'La facture ne peux être créée car un numéro de commande (ordre achat) est nécessaire.');
+            return $this->redirectToRoute('bills');
+        }
+        $this->generatePdf($bill, true);
+    }
+
+    /**
+     * @Route("/bill-to-pdf/test", name="bill-pdf-test")
+     */
+    public function testBillToPdf()
+    {
+        $this->generatePdf(null, true);
+    }
+
+    function generatePdf(Bill $bill = null, $fullBill = false) {
+        $em = $this->getDoctrine()->getManager();
         $bill = $bill ?? $this->fakeBill();
+        $docTypeName = $fullBill ? "Facture" : "Devis";
+
+        if ($fullBill && !$bill->getFullBillDate()) {
+            $now = new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris'));
+            $bill->setFullBillDate($now);
+
+            // bornes du mois en cours
+            $from = $now->modify('first day of this month midnight');
+            $to   = $from->modify('first day of next month midnight');
+
+            // on compte les factures déjà émises ce mois-ci
+            $count = $em->getRepository(Bill::class)->createQueryBuilder('b')
+                ->select('COUNT(b.id)')
+                ->andWhere('b.fullBillDate >= :from')
+                ->andWhere('b.fullBillDate < :to')
+                ->setParameter('from', $from)
+                ->setParameter('to', $to)
+                ->getQuery()
+                ->getSingleScalarResult();
+
+            $seq = (int)$count + 1; // la nouvelle facture est la suivante
+
+            // numéro au format YYYYMMDD#### (#### = compteur mensuel zero-padded 4)
+            $billNumber = $now->format('Ymd') . str_pad((string)$seq, 4, '0', STR_PAD_LEFT);
+            $bill->setBillNumber($billNumber);
+            $em->flush();
+        }
 
         // We get our services and items
         $datas = $this->fetchBillDatas($bill);
+        $datas['billNumber'] = $bill->getBillNumber();
         // Retrieve the HTML generated in our twig file
         $html = $this->renderView('pdf/template-bill.html.twig', [
+            'fullBill' => $fullBill,
             'datas' => $datas,
+            'addressTop' => getenv('ADDRESS_TOP'),
+            'addressBottom' => getenv('ADDRESS_BOTTOM'),
+            'siren' => getenv('SIREN'),
+            'billEmail' => getenv('BILL_EMAIL'),
+            'billPhone' => getenv('CONTACT_PHONE'),
             'nncLogoUrl' => getenv('NNC_LOGO_URL'),
             'partnerLogoUrl' => getenv('PARTNER_LOGO_URL'),
+            'bankName' => getenv('BANK_NAME'),
+            'bankIban' => getenv('BANK_IBAN'),
+            'bankBic' => getenv('BANK_BIC'),
+            'tvaIntracom' => getenv('TVA_INTRACOM'),
+            'bill' => $bill,
         ]);
 
+        $old = error_reporting();
+        error_reporting($old & ~E_WARNING);
         $pdfRender = new PdfRender;
-        $pdfRender->generatePdf($html, "Devis " . $bill->getId() . " " . $bill->getName());
+        $pdfRender->generatePdf($html, $docTypeName . " - " . ($fullBill ? $bill->getBillNumber() : $bill->getId()) . " - " . $bill->getName());
+        error_reporting($old);
     }
 
     function fakeBill() {
         $bill = new Bill();
         $bill->setId(0);
-        $bill->setName("Devis de test");
+        $bill->setName("Test");
         $bill->setUser(null);
         $bill->setServices([1, 2, 4]);
         $bill->setItems([
@@ -393,6 +474,10 @@ class BillsController extends AbstractController
             $mapID++;
         }
 
+        $datas['tva'] = getenv('TVA_VALUE');
+        $datas['price_from_tva'] = $datas['price'] * $datas['tva'] / 100;
+        $datas['price_with_tva'] = $datas['price'] + $datas['price_from_tva'];
+
         // reindex our datas permit to getting services in the right order when rendering them in the template
         sort($datas['services']);
         return $datas;
@@ -400,5 +485,30 @@ class BillsController extends AbstractController
 
     function custom_sort($a,$b) {
         return $a['index']>$b['index'];
+    }
+
+    /**
+     * @Route("/bills/{id}/set-po", name="bill_set_po", methods={"POST"})
+     */
+    public function setPurchaseOrder(Bill $bill, Request $request): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Sécurité CSRF
+        if (!$this->isCsrfTokenValid('set_po_'.$bill->getId(), $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('CSRF token invalide.');
+        }
+
+        $po = trim((string) $request->request->get('purchaseOrder'));
+        if ($po === '') {
+            $this->addFlash('warning', 'La valeur ne peut pas être vide.');
+            return $this->redirectToRoute('bills');
+        }
+
+        $bill->setPurchaseOrder($po);
+        $em->flush();
+        $this->addFlash('success', 'Bon de commande enregistré.');
+
+        return $this->redirectToRoute('bills');
     }
 }

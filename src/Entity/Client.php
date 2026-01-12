@@ -11,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Client
 {
-
     use IdTrait;
 
     use NameTrait;
@@ -82,4 +81,45 @@ class Client
         $this->bills = $bills;
     }
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $code;
+
+    /**
+     * @return integer
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param integer $id
+     */
+    public function setCode($code): void
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $siret;
+
+    /**
+     * @return string
+     */
+    public function getSiret()
+    {
+        return $this->siret;
+    }
+
+    /**
+     * @param string $siret
+     */
+    public function setSiret($siret)
+    {
+        $this->siret = $siret;
+    }
 }
